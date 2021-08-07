@@ -1,0 +1,49 @@
+---
+title: "Diagnostic test evaluation: perfect reference test"
+author: "Paolo Eusebi"
+date: "16/09/2021"
+output: ioslides_presentation
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE)
+```
+
+## Four phases in architecture of diagnostic research
+
+- **Phase I** Do test results in patients with the target disorder differ from those in normal people? Table 1 shows the architecture of this question.
+
+- **Phase II** Are patients with certain test results more likely to have the target disorder than patients with other test results?
+
+- **Phase III** Does the test result distinguish patients with and without the target disorder among patients in whom it is clinically reasonable to suspect that the disease is present?
+
+- **Phase IV** Do patients who undergo this diagnostic test fare better (in their ultimate health outcomes) than similar patients who are not tested?
+
+## Measures of diagnostic accuracy
+
+
+|    | D+ | D- |
+|:--:|:--:|:--:|
+| T+ | TP | FP |
+| T- | FN | TN |
+
+
+## Measures of diagnostic accuracy
+
+- Sensitivity = TP/D+
+- Specificity = TN/D-
+- PPV = TP/T+
+- NPV = TN/T-
+
+## Slide with R Output
+
+```{r cars, echo = TRUE}
+summary(cars)
+```
+
+## Slide with Plot
+
+```{r pressure}
+plot(pressure)
+```
+
