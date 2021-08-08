@@ -1,8 +1,8 @@
 ---
-title: "Diagnostic test evaluation: perfect reference test"
+title: "Untitled"
 author: "Paolo Eusebi"
-date: "16/09/2021"
-output: ioslides_presentation
+date: "8/8/2021"
+output: powerpoint_presentation
 ---
 
 ```{r setup, include=FALSE}
