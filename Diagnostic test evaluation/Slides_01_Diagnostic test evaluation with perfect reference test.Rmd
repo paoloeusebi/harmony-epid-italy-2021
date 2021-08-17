@@ -2,11 +2,17 @@
 title: "Untitled"
 author: "Paolo Eusebi"
 date: "8/8/2021"
-output: powerpoint_presentation
+output:
+  beamer_presentation: default
+  aspectratio: 43
+  colortheme: seahorse
+
 ---
 
-```{r setup, include=FALSE}
-knitr::opts_chunk$set(echo = FALSE)
+```{r setup, include=T, message=F}
+knitr::opts_chunk$set(echo = F)
+library(tidyverse)
+library(kableExtra)
 ```
 
 ## Four phases in architecture of diagnostic research
@@ -21,14 +27,23 @@ knitr::opts_chunk$set(echo = FALSE)
 
 ## Measures of diagnostic accuracy
 
+```{r}
+df <- tibble("  " = c("T+", "T-"),
+             "D+" = c("TP", "FN"),
+             "D-" = c("TP", "FN"))
 
-|    | D+ | D- |
-|:--:|:--:|:--:|
-| T+ | TP | FP |
-| T- | FN | TN |
+df %>% kable()
+```
 
 
 ## Measures of diagnostic accuracy
+```{r}
+df <- tibble("  " = c("T+", "T-"),
+             "D+" = c("TP", "FN"),
+             "D-" = c("TP", "FN"))
+
+df %>% kable()
+```
 
 - Sensitivity = TP/D+
 - Specificity = TN/D-

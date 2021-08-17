@@ -76,7 +76,7 @@ model {
 
 "
 
-y
+y # data
 n = sum(y) #sample size for each study
 # initial values
 inits1 = list(".RNG.name" ="base::Mersenne-Twister", ".RNG.seed" = 100022)
@@ -128,8 +128,6 @@ model {
 
 "
 
-y
-n = sum(y) #sample size for each study
 # initial values
 inits1 = list(".RNG.name" ="base::Mersenne-Twister", ".RNG.seed" = 100022)
 inits2 = list(".RNG.name" ="base::Mersenne-Twister", ".RNG.seed" = 300022)
