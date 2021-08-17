@@ -1,16 +1,19 @@
 ---
-title: "Untitled"
+title: "Diagnostic test evaluation with perfect reference test"
 author: "Paolo Eusebi"
-date: "8/8/2021"
-output:
-  beamer_presentation: default
-  aspectratio: 43
-  colortheme: seahorse
+date: "16/09/2021"
 
+theme: metropolis
+aspectratio: 43
+colortheme: seahorse
+
+output:
+  beamer_presentation: 
+      slide_level: 2
 ---
 
-```{r setup, include=T, message=F}
-knitr::opts_chunk$set(echo = F)
+```{r setup, include=TRUE, message=FALSE, warning = FALSE, echo=FALSE, render=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
 library(tidyverse)
 library(kableExtra)
 ```
@@ -25,22 +28,24 @@ library(kableExtra)
 
 - **Phase IV** Do patients who undergo this diagnostic test fare better (in their ultimate health outcomes) than similar patients who are not tested?
 
+
 ## Measures of diagnostic accuracy
 
-```{r}
+```{r, echo=FALSE}
 df <- tibble("  " = c("T+", "T-"),
              "D+" = c("TP", "FN"),
-             "D-" = c("TP", "FN"))
+             "D-" = c("FP", "TN"))
 
 df %>% kable()
 ```
 
 
 ## Measures of diagnostic accuracy
-```{r}
+
+```{r,echo=FALSE}
 df <- tibble("  " = c("T+", "T-"),
              "D+" = c("TP", "FN"),
-             "D-" = c("TP", "FN"))
+             "D-" = c("FP", "TN"))
 
 df %>% kable()
 ```
@@ -50,15 +55,46 @@ df %>% kable()
 - PPV = TP/T+
 - NPV = TN/T-
 
-## Slide with R Output
+## Measures of diagnostic accuracy
 
-```{r cars, echo = TRUE}
-summary(cars)
+- Frequencies
+```{r, echo=FALSE}
+
+df <- tibble("  " = c("T+", "T-"),
+             "D+" = c("y[1]", "y[2]"),
+             "D-" = c("y[3]", "y[4]"))
+
+df %>% kable()
 ```
 
-## Slide with Plot
+- Probabilities
+```{r, echo=FALSE}
 
-```{r pressure}
-plot(pressure)
+df <- tibble("  " = c("T+", "T-"),
+             "D+" = c("p[1]", "p[2]"),
+             "D-" = c("p[3]", "p[4]"))
+df %>% kable()
+```
+
+## Bayesian model
+
+```{r}
+"model {
+
+# likelihood
+
+  y[1:4] ~ dmulti(prob[1:4], n)
+
+  prob[1] <- p * Se
+  prob[2] <- p * (1 - Se)
+  prob[3] <- (1 - p) * (1 - Sp)
+  prob[4] <- (1 - p) * Sp
+
+# priors
+
+  p ~ dbeta(1, 1)
+  Se ~ dbeta(1,1)
+  Sp ~ dbeta(1,1)
+"
 ```
 
