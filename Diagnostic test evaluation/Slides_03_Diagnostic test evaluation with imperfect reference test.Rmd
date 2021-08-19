@@ -1,0 +1,406 @@
+---
+title: "Diagnostic test evaluation with imperfect reference test"
+author: "Paolo Eusebi"
+date: "16/09/2021"
+
+theme: metropolis
+aspectratio: 43
+colortheme: seahorse
+
+output:
+  beamer_presentation: 
+      slide_level: 2
+---
+
+```{r setup, include=TRUE, message=FALSE, warning = FALSE, echo=FALSE, render=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+library(tidyverse)
+library(kableExtra)
+library(runjags)
+```
+
+
+## Recap
+
+- Fitting models using MCMC is easy with JAGS / runjags
+
+- But we must **never forget** to check convergence and effective sample size!
+
+- More complex models become easy to implement
+
+- So how do we extend these models to multiple diagnostic tests?
+
+
+# Hui-Walter models for 2 tests and 1 population
+
+## Hui-Walter Model
+
+- A particular model formulation that was originally designed for evaluating diagnostic tests in the absence of a gold standard
+
+- Not necessarily (or originally) Bayesian but often implemented using Bayesian MCMC
+  
+- But evaluating an imperfect test against another imperfect test is a bit like pulling a rabbit out of a hat
+
+- If we don't know the true disease status, how can we estimate sensitivity or specificity for either test?
+
+
+## Model Specification
+
+```{r, echo=FALSE}
+hw_2t_1p <- c("model{
+  y ~ dmulti(prob, TotalTests)
+  
+  # Test1- Test2-
+	prob[1] <- (p*((1-se[1])*(1-se[2]))) + ((1-p)*((sp[1])*(sp[2])))
+  # Test1+ Test2-
+	prob[2] <- (p*((se[1])*(1-se[2]))) + ((1-p)*((1-sp[1])*(sp[2])))
+  # Test1- Test2+
+	prob[3] <- (p*((1-se[1])*(se[2]))) + ((1-p)*((sp[1])*(1-sp[2])))
+  # Test1+ Test2+
+	prob[4] <- (p*((se[1])*(se[2]))) + ((1-p)*((1-sp[1])*(1-sp[2])))
+	", " 
+  p ~ dbeta(1, 1)
+  se[1] ~ dbeta(1, 1)
+  sp[1] ~ dbeta(1, 1)
+  se[2] ~ dbeta(1, 1)
+  sp[2] ~ dbeta(1, 1)
+  #data# y, TotalTests
+  #monitor# p, prob, se, sp
+  #inits# p, se, sp
+}
+")
+cat(hw_2t_1p, sep='', file='hw_2t_1p.bug')
+```
+
+
+```{r comment='', echo=FALSE}
+cat(hw_2t_1p[1], sep='\n')
+```
+
+## Model Specification
+
+```{r comment='', echo=FALSE}
+cat(hw_2t_1p[2], sep='\n')
+```
+
+## Data, inititial values, run
+```{r, echo=FALSE}
+df <- tibble("  " = c("T1+", "T1-"),
+             "T2+" = c(48, 12),
+             "T2-" = c(4, 36))
+df %>% kable()
+```
+
+
+```{r, message=FALSE, warning=FALSE, results='hide'}
+y <- c(48, 12, 4, 36)
+TotalTests <- sum(y)
+p <- list(chain1=0.05, chain2=0.95)
+se <- list(chain1=c(0.5,0.99), chain2=c(0.99,0.5))
+sp <- list(chain1=c(0.5,0.99), chain2=c(0.99,0.5))
+results <- run.jags(hw_2t_1p, n.chains=2)
+```
+
+[Remember to check convergence and effective sample size!]
+
+---
+
+```{r, eval=FALSE}
+results
+```
+
+```{r echo=FALSE}
+res <- summary(results)[,c(1:3,9,11)]
+res[] <- round(res, 3)
+knitr::kable(res)
+```
+
+- Note the wide credible intervals!
+
+
+## Practicalities
+
+- These models need A LOT of data
+  * And/or strong priors for one of the tests
+
+- Convergence is more problematic than usual
+
+- Be **very** careful with the order of combinations in dmultinom!
+
+- Check your results carefully to ensure they make sense!
+
+
+## Label Switching
+
+How to interpret a test with Se=0% and Sp=0%?
+
+The test is perfect - we are just holding it upside down...
+
+We can force se+sp >= 1:
+
+```{r eval=FALSE}
+  se[1] ~ dbeta(1, 1)
+  sp[1] ~ dbeta(1, 1)T(1-se[1], )
+```
+
+Or:
+
+```{r eval=FALSE}
+  se[1] ~ dbeta(1, 1)T(1-sp[1], )
+  sp[1] ~ dbeta(1, 1)
+```
+
+But not both!
+
+This allows the test to be useless, but not worse than useless
+
+
+## Simulating data
+
+Analysing simulated data is useful to check that we can recover parameter values.
+
+```{r}
+se1 <- 0.9; sp1 <- 0.95;
+se2 <- 0.8; sp2 <- 0.99
+prevalence <- 0.5; N <- 100
+truestatus <- rbinom(N, 1, prevalence)
+Test1 <- rbinom(N, 1, (truestatus * se1) + ((1-truestatus) * (1-sp1)))
+Test2 <- rbinom(N, 1, (truestatus * se2) + ((1-truestatus) * (1-sp2)))
+t <- table(Test1, Test2)
+y <- as.numeric(t)
+```
+
+Can we recover these parameter values?
+  
+## Exercise
+  
+Modify the code in the Hui Walter model to force tests to be no worse than useless
+
+Simulate data and recover parameters for:
+  
+- N=10
+- N=100
+- N=1000
+
+
+
+## Solution
+
+Model definition:
+  
+```{r include=FALSE}
+hw_2t_1p_priors <- "model{
+  y ~ dmulti(prob, TotalTests)
+  
+  # Test1- Test2-
+	prob[1] <- (p * ((1-se[1])*(1-se[2]))) + ((1-p) * ((sp[1])*(sp[2])))
+  # Test1+ Test2-
+	prob[2] <- (p * ((se[1])*(1-se[2]))) + ((1-p) * ((1-sp[1])*(sp[2])))
+  # Test1- Test2+
+	prob[3] <- (p * ((1-se[1])*(se[2]))) + ((1-p) * ((sp[1])*(1-sp[2])))
+  # Test1+ Test2+
+	prob[4] <- (p * ((se[1])*(se[2]))) + ((1-p) * ((1-sp[1])*(1-sp[2])))
+ 
+  p ~ dbeta(1, 1)
+  se[1] ~ dbeta(HPSe[1,1], HPSe[1,2])T(1-sp[1], )
+  sp[1] ~ dbeta(HPSp[1,1], HPSp[1,2])
+  se[2] ~ dbeta(HPSe[2,1], HPSe[2,2])T(1-sp[2], )
+  sp[2] ~ dbeta(HPSp[2,1], HPSp[2,2])
+  #data# y, TotalTests, HPSe, HPSp
+  #monitor# p, prob, se, sp
+  #inits# p, se, sp
+}
+"
+cat(hw_2t_1p_priors, file='hw_2t_1p_priors.bug')
+```
+
+```{r comment='', echo=FALSE}
+cat(hw_2t_1p_priors, sep='\n')
+```
+
+Note that we specify the prior hyperparameters as data so we can change these from R without havíng to edit the model file (this is optional!)
+
+```{r}
+se1 <- 0.9
+sp1 <- 0.95
+se2 <- 0.8
+sp2 <- 0.99
+prevalence <- 0.5
+# Change N to be 10, 100 or 1000:
+N <- 100
+truestatus <- rbinom(N, 1, prevalence)
+Test1 <- rbinom(N, 1, (truestatus * se1) + ((1-truestatus) * (1-sp1)))
+Test2 <- rbinom(N, 1, (truestatus * se2) + ((1-truestatus) * (1-sp2)))
+twoXtwo <- table(Test1, Test2)
+twoXtwo
+
+y <- as.numeric(twoXtwo)
+TotalTests <- sum(y)
+HPSe <- matrix(c(1,1,1,1), nrow=2, ncol=2)
+HPSp <- matrix(c(1,1,1,1), nrow=2, ncol=2)
+p <- list(chain1=0.05, chain2=0.95)
+se <- list(chain1=c(0.5,0.99), chain2=c(0.99,0.5))
+sp <- list(chain1=c(0.5,0.99), chain2=c(0.99,0.5))
+results <- run.jags(hw_2t_1p_priors, n.chains=2)
+results
+```
+
+How well do we recover our parameters?
+  
+```{r}
+se1
+se2
+sp1
+sp2
+```
+
+Not that well!
+
+
+## Optional Exercise
+
+Compare results with the following priors for test 1:
+  
+- Sensitivity = 0.9 (95% CI: 0.85 - 0.95)
+- Specificity = 0.95 (95%CI: 0.92-0.97)
+
+[These are the same as in session 1]
+
+
+## Optional Solution
+
+```{r}
+HPSe[1,] <- c(148.43, 16.49)
+HPSp[1,] <- c(240.03, 12.63)
+HPSe
+HPSp
+results <- run.jags(hw_2t_1p_priors, n.chains=2)
+results
+```
+
+How well do we recover our parameters for test 2?
+  
+```{r}
+se1
+se2
+sp1
+sp2
+```
+
+A bit better!  But note that the credible interval for test 1 is not much narrower than that of the prior:
+  
+```{r}
+# Sensitivity:
+qbeta(c(0.025, 0.5, 0.975), 148.43, 16.49)
+# Specificity:
+qbeta(c(0.025, 0.5, 0.975), 240.03, 12.63)
+```
+
+So we have not gained any additional information about test 1.
+
+
+# Hui-Walter models for 2 tests and N populations
+
+## Hui-Walter models with multiple populations
+
+- Basically an extension of the single-population model
+
+- Works best with multiple populations each with differing prevalence
+
+- Including an unexposed population works well BUT be wary of assumptions regarding constant sensitivity/specificity across populations with very different types of infections
+
+
+## Independent intercepts for populations
+
+```{r eval=FALSE}
+model{
+  for(p in 1:Populations){
+    Tally[1:4, p] ~ dmulti(prob[1:4, p], TotalTests[p])
+    # Test1- Test2- Pop1
+    prob[1, p] <- (prev[p] * ((1-se[1])*(1-se[2]))) + ((1-prev[p]) * ((sp[1])*(sp[2])))
+    ## etc ##
+    prev[p] ~ dbeta(1, 1)
+  }
+  se[1] ~ dbeta(HPSe[1,1], HPSe[1,2])T(1-sp[1], )
+  sp[1] ~ dbeta(HPSp[1,1], HPSp[1,2])
+  se[2] ~ dbeta(HPSe[2,1], HPSe[2,2])T(1-sp[2], )
+  sp[2] ~ dbeta(HPSp[2,1], HPSp[2,2])
+  #data# Tally, TotalTests, Populations, HPSe, HPSp
+  #monitor# prev, prob, se, sp
+  #inits# prev, se, sp
+}
+```
+
+
+## Auto Hui-Walter
+
+We would usually start with individual-level data in a dataframe:
+  
+```{r}
+se1 <- 0.9; se2 <- 0.8; sp1 <- 0.95; sp2 <- 0.99
+prevalences <- c(0.1, 0.5, 0.9)
+N <- 100
+simdata <- data.frame(Population = sample(seq_along(prevalences), N, replace=TRUE))
+simdata$probability <- prevalences[simdata$Population]
+simdata$truestatus <- rbinom(N, 1, simdata$probability)
+simdata$Test1 <- rbinom(N, 1, (simdata$truestatus * se1) + ((1-simdata$truestatus) * (1-sp1)))
+simdata$Test2 <- rbinom(N, 1, (simdata$truestatus * se2) + ((1-simdata$truestatus) * (1-sp2)))
+```
+
+---
+  
+```{r, eval=FALSE}
+head(simdata)
+```
+
+```{r, echo=FALSE}
+head(simdata)
+```
+
+[Except that probability and truestatus would not normally be known!]
+
+---
+  
+The model code and data format for an arbitrary number of populations (and tests) can be determined automatically
+
+There is a function (provided in the GitHub repo) that can do this for us:
+  
+```{r, results='hide'}
+simdata$Population <- factor(simdata$Population, levels=seq_along(prevalences), labels=paste0('Pop_', seq_along(prevalences)))
+source("autohuiwalter.R")
+auto_huiwalter(simdata[,c('Population','Test1','Test2')], outfile='autohw.bug')
+```
+
+---
+  
+This generates self-contained model/data/initial values etc (ignore covse and covsp for now):
+  
+```{r echo=FALSE, comment=''}
+cat(readLines('autohw.bug')[-(1:2)], sep='\n')
+```
+---
+  
+And can be run directly from R:
+  
+```{r, results='hide'}
+results <- run.jags('autohw.bug')
+results
+```
+
+```{r echo=FALSE}
+res <- summary(results)[,c(1:3,9,11)]
+res[] <- round(res, 3)
+knitr::kable(res)
+```
+
+---
+  
+- Modifying priors must still be done directly in the model file
+
+- The model needs to be re-generated if the data changes
+
+- But remember that your modified priors will be reset
+
+- There must be a single column for the population (as a factor), and all of the other columns (either factor, logical or numeric) are interpreted as being test results
+
+- The function will soon be included in the runjags package

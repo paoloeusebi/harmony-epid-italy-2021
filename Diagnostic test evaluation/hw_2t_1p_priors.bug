@@ -1,0 +1,21 @@
+model{
+  y ~ dmulti(prob, TotalTests)
+  
+  # Test1- Test2-
+	prob[1] <- (p * ((1-se[1])*(1-se[2]))) + ((1-p) * ((sp[1])*(sp[2])))
+  # Test1+ Test2-
+	prob[2] <- (p * ((se[1])*(1-se[2]))) + ((1-p) * ((1-sp[1])*(sp[2])))
+  # Test1- Test2+
+	prob[3] <- (p * ((1-se[1])*(se[2]))) + ((1-p) * ((sp[1])*(1-sp[2])))
+  # Test1+ Test2+
+	prob[4] <- (p * ((se[1])*(se[2]))) + ((1-p) * ((1-sp[1])*(1-sp[2])))
+ 
+  p ~ dbeta(1, 1)
+  se[1] ~ dbeta(HPSe[1,1], HPSe[1,2])T(1-sp[1], )
+  sp[1] ~ dbeta(HPSp[1,1], HPSp[1,2])
+  se[2] ~ dbeta(HPSe[2,1], HPSe[2,2])T(1-sp[2], )
+  sp[2] ~ dbeta(HPSp[2,1], HPSp[2,2])
+  #data# y, TotalTests, HPSe, HPSp
+  #monitor# p, prob, se, sp
+  #inits# p, se, sp
+}
