@@ -71,8 +71,8 @@ df %>% kable()
 ```{r, echo=FALSE}
 
 df <- tibble("  " = c("T+", "T-"),
-             "D+" = c("p[1]", "p[2]"),
-             "D-" = c("p[3]", "p[4]"))
+             "D+" = c("prob[1]", "prob[2]"),
+             "D-" = c("prob[3]", "prob[4]"))
 df %>% kable()
 ```
 
