@@ -7,7 +7,7 @@ RStudio Version 1.3.1093
 JAGS version 4.3.0 found successfully using the command
 
 packages
-- runjags'C:/Users/E619545/AppData/Local/JAGS/JAGS-4.3.0/x64/bin/jags-terminal.exe'
+- runjags
 - rjags 
 - tidyverse
 - knitr
