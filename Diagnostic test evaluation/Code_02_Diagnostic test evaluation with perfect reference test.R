@@ -2,21 +2,24 @@ library(runjags)
 library(rjags)
 testjags()
 
-y=c(900, 100, 500, 500)
+# Data from Whitman et al. Test performance evaluation of SARS-CoV-2 serological assays.
+# medRxiv. 2020;(https://doi.org/10.1101/2020.04.25.20074856). Accessed July 4, 2020
+
+y <- c(17, 4, 14, 38)
 t <- matrix(
   y,
   nrow = 2,
   byrow = F,
   dimnames = list(c("T+", "T-"),
                   c("D+", "D-")))
-
 t
 
 # Sample size
 sum(t)
 
 # Prevalence
-(t[1]+t[2])/(sum(t))
+p <- (t[1]+t[2])/(sum(t))
+p
 
 # Sensitivity
 Se <- t[1]/(t[1]+t[2])
@@ -48,9 +51,7 @@ sum(diag(t))/sum(t)
 
 
 # Bayesian model
-model <- "
-
-model {
+model <- " model {
 
 # likelihood
 
@@ -77,8 +78,8 @@ model {
 "
 
 y # data
-n = sum(y) #sample size for each study
-# initial values
+n <- sum(y) # total sample size
+# initial values for the three chains
 inits1 = list(".RNG.name" ="base::Mersenne-Twister", ".RNG.seed" = 100022)
 inits2 = list(".RNG.name" ="base::Mersenne-Twister", ".RNG.seed" = 300022)
 inits3 = list(".RNG.name" ="base::Mersenne-Twister", ".RNG.seed" = 500022)
@@ -89,17 +90,17 @@ results <- run.jags(model,
                     inits = list(inits1, inits2, inits3),
                     burnin = 1000,
                     sample = 5000)
+
 print(results)
+
 plot(results,
      vars = list("Se", "Sp", "p"),
      layout = c(3, 3),
      plot.type = c("trace", "histogram", "autocorr"))
 
+# Bayesian model: calculating NPV according to specific prevalence
 
-# Bayesian model: calculating NPV according to ceratin threshold
-model <- "
-
-model {
+model <- "model {
 
 # likelihood
 
@@ -117,16 +118,19 @@ model {
   Sp ~ dbeta(1,1)
 
 # Computing NPV according to certain prevalence threshold
-  p1 = 0.05
-  NPV = (Sp*p1)/((1-Se)*p1 + Sp*(1-p1))
 
-#data# n, y
+  NPV = (Sp*p)/((1-Se)*p + Sp*(1-p))
+  NPV1 = (Sp*p1)/((1-Se)*p1 + Sp*(1-p1))
+
+#data# n, y, p1
 #inits#
-#monitor# Se, Sp, p, NPV
+#monitor# Se, Sp, p, NPV, NPV1
 
 }
 
 "
+# The specific prevalence is provided as data for the model
+p1 <- 0.005 # change from 0 to 1
 
 # initial values
 inits1 = list(".RNG.name" ="base::Mersenne-Twister", ".RNG.seed" = 100022)
@@ -141,6 +145,7 @@ results <- run.jags(model,
                     sample = 5000)
 print(results)
 plot(results,
-     vars = list("Se","Sp", "NPV"),
-     layout = c(3, 3),
-     plot.type = c("trace", "histogram", "autocorr"))
+     vars = list("NPV1", "NPV"),
+     layout = c(2, 1),
+     plot.type = "histogram")
+

@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.23 (TeX Live 2021/W32TeX) (preloaded format=pdflatex 2021.8.17)  18 AUG 2021 00:06
+This is pdfTeX, Version 3.141592653-2.6-1.40.23 (TeX Live 2021/W32TeX) (preloaded format=pdflatex 2021.8.17)  22 AUG 2021 14:51
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -1175,61 +1175,63 @@ Overfull \vbox (44.55624pt too high) detected at line 137
 {c:/Users/E619545/AppData/Roaming/TinyTeX/texmf-var/fonts/map/pdftex/updmap/pdf
 tex.map}]
 LaTeX Font Info:    Trying to load font information for TS1+lmss on input line 
-160.
+159.
 (c:/Users/E619545/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/lm/ts1lmss.fd
 File: ts1lmss.fd 2015/05/01 v1.6.1 Font defs for Latin Modern
 ) [2
 
 ]
 LaTeX Font Info:    Trying to load font information for OT1+lmss on input line 
-175.
+174.
 (c:/Users/E619545/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/lm/ot1lmss.fd
 File: ot1lmss.fd 2015/05/01 v1.6.1 Font defs for Latin Modern
 )
 LaTeX Font Info:    Trying to load font information for OML+lmm on input line 1
-75.
+74.
 (c:/Users/E619545/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/lm/omllmm.fd
 File: omllmm.fd 2015/05/01 v1.6.1 Font defs for Latin Modern
 )
 LaTeX Font Info:    Trying to load font information for OMS+lmsy on input line 
-175.
+174.
 (c:/Users/E619545/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/lm/omslmsy.fd
 File: omslmsy.fd 2015/05/01 v1.6.1 Font defs for Latin Modern
 )
 LaTeX Font Info:    Trying to load font information for OMX+lmex on input line 
-175.
+174.
 (c:/Users/E619545/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/lm/omxlmex.fd
 File: omxlmex.fd 2015/05/01 v1.6.1 Font defs for Latin Modern
 )
 LaTeX Font Info:    External font `lmex10' loaded for size
-(Font)              <10.95> on input line 175.
+(Font)              <10.95> on input line 174.
 LaTeX Font Info:    External font `lmex10' loaded for size
-(Font)              <8> on input line 175.
+(Font)              <8> on input line 174.
 LaTeX Font Info:    External font `lmex10' loaded for size
-(Font)              <6> on input line 175.
-LaTeX Font Info:    Trying to load font information for U+msa on input line 175
+(Font)              <6> on input line 174.
+LaTeX Font Info:    Trying to load font information for U+msa on input line 174
 .
 
 (c:/Users/E619545/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/amsfonts/umsa.fd
 File: umsa.fd 2013/01/14 v3.01 AMS symbols A
 )
-LaTeX Font Info:    Trying to load font information for U+msb on input line 175
+LaTeX Font Info:    Trying to load font information for U+msb on input line 174
 .
 
 (c:/Users/E619545/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/amsfonts/umsb.fd
 File: umsb.fd 2013/01/14 v3.01 AMS symbols B
 )
 LaTeX Font Info:    Font shape `T1/lmss/m/it' in size <10.95> not available
-(Font)              Font shape `T1/lmss/m/sl' tried instead on input line 175.
+(Font)              Font shape `T1/lmss/m/sl' tried instead on input line 174.
 LaTeX Font Info:    Font shape `T1/lmss/m/it' in size <8> not available
-(Font)              Font shape `T1/lmss/m/sl' tried instead on input line 175.
+(Font)              Font shape `T1/lmss/m/sl' tried instead on input line 174.
 LaTeX Font Info:    Font shape `T1/lmss/m/it' in size <6> not available
-(Font)              Font shape `T1/lmss/m/sl' tried instead on input line 175.
+(Font)              Font shape `T1/lmss/m/sl' tried instead on input line 174.
 [3
 
 ] [4
 
 ] [5
+
+] [6
 
 ]
 \openout4 = `Slides_02_Diagnostic-test-evaluation-with-perfect-reference-test.v
@@ -1241,18 +1243,20 @@ LaTeX Font Info:    Trying to load font information for T1+lmtt on input line 5
 (c:/Users/E619545/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/lm/t1lmtt.fd
 File: t1lmtt.fd 2015/05/01 v1.6.1 Font defs for Latin Modern
 )
-Overfull \hbox (1129.89351pt too wide) in paragraph at lines 28--28
-[]\T1/lmtt/m/n/10.95 ## [1] "model {\n\n# likelihood\n\n  y[1:4] ~ dmulti(prob[
-1:4], n)\n\n  prob[1] <- p * Se\n  prob[2] <- p * (1 - Se)\n  prob[3] <- (1 - p
-) * (1 - Sp)\n  prob[4] <- (1 - p) * Sp\n\n# priors\n\n  p ~ dbeta(1, 1)\n  Se 
-~ dbeta(1,1)\n  Sp ~ dbeta(1,1)\n"[] 
+Overfull \hbox (1106.89857pt too wide) in paragraph at lines 26--26
+[]\T1/lmtt/m/n/10.95 ## [1] "model {\n\n# likelihood\n  y[1:4] ~ dmulti(prob[1:
+4], n)\n\n  prob[1] <- p * Se\n  prob[2] <- p * (1 - Se)\n  prob[3] <- (1 - p) 
+* (1 - Sp)\n  prob[4] <- (1 - p) * Sp\n\n# priors\n  p ~ dbeta(1, 1)\n  Se ~ db
+eta(1,1)\n  Sp ~ dbeta(1,1)\n"[] 
  []
 
 )
-Overfull \vbox (90.81035pt too high) detected at line 270
+Overfull \vbox (59.5305pt too high) detected at line 290
  []
 
-[6
+[7
+
+] [8
 
 ]
 \tf@nav=\write7
@@ -1273,25 +1277,30 @@ rfect-reference-test.out' has not changed.
 (rerunfilecheck)             Checksum: D41D8CD98F00B204E9800998ECF8427E;0.
  ) 
 Here is how much of TeX's memory you used:
- 24698 strings out of 480502
- 488956 string characters out of 5897829
- 758473 words of memory out of 5000000
- 41807 multiletter control sequences out of 15000+600000
+ 24717 strings out of 480502
+ 489311 string characters out of 5897829
+ 758475 words of memory out of 5000000
+ 41820 multiletter control sequences out of 15000+600000
  452458 words of font info for 60 fonts, out of 8000000 for 9000
  14 hyphenation exceptions out of 8191
  101i,13n,113p,1865b,576s stack positions out of 5000i,500n,10000p,200000b,80000s
 {c:/Users/E619545/AppData/Roaming/TinyTeX/texmf-dist/fonts/enc/dvips/lm/lm-ec
 .enc}{c:/Users/E619545/AppData/Roaming/TinyTeX/texmf-dist/fonts/enc/dvips/lm/lm
--ts1.enc}<c:/Users/E619545/AppData/Roaming/TinyTeX/texmf-dist/fonts/type1/publi
-c/lm/lmss10.pfb><c:/Users/E619545/AppData/Roaming/TinyTeX/texmf-dist/fonts/type
-1/public/lm/lmss8.pfb><c:/Users/E619545/AppData/Roaming/TinyTeX/texmf-dist/font
-s/type1/public/lm/lmssbx10.pfb><c:/Users/E619545/AppData/Roaming/TinyTeX/texmf-
-dist/fonts/type1/public/lm/lmtt10.pfb>
+-rm.enc}{c:/Users/E619545/AppData/Roaming/TinyTeX/texmf-dist/fonts/enc/dvips/lm
+/lm-mathsy.enc}{c:/Users/E619545/AppData/Roaming/TinyTeX/texmf-dist/fonts/enc/d
+vips/lm/lm-ts1.enc}<c:/Users/E619545/AppData/Roaming/TinyTeX/texmf-dist/fonts/t
+ype1/public/lm/lmss10.pfb><c:/Users/E619545/AppData/Roaming/TinyTeX/texmf-dist/
+fonts/type1/public/lm/lmss8.pfb><c:/Users/E619545/AppData/Roaming/TinyTeX/texmf
+-dist/fonts/type1/public/lm/lmssbx10.pfb><c:/Users/E619545/AppData/Roaming/Tiny
+TeX/texmf-dist/fonts/type1/public/lm/lmsso10.pfb><c:/Users/E619545/AppData/Roam
+ing/TinyTeX/texmf-dist/fonts/type1/public/lm/lmsso8.pfb><c:/Users/E619545/AppDa
+ta/Roaming/TinyTeX/texmf-dist/fonts/type1/public/lm/lmsy8.pfb><c:/Users/E619545
+/AppData/Roaming/TinyTeX/texmf-dist/fonts/type1/public/lm/lmtt10.pfb>
 Output written on Slides_02_Diagnostic-test-evaluation-with-perfect-reference-t
-est.pdf (6 pages, 94658 bytes).
+est.pdf (8 pages, 139317 bytes).
 PDF statistics:
- 81 PDF objects out of 1000 (max. 8388607)
- 57 compressed objects within 1 object stream
- 18 named destinations out of 1000 (max. 500000)
+ 119 PDF objects out of 1000 (max. 8388607)
+ 85 compressed objects within 1 object stream
+ 24 named destinations out of 1000 (max. 500000)
  43 words of extra memory for PDF output out of 10000 (max. 10000000)
 

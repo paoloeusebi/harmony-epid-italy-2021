@@ -12,7 +12,7 @@ output:
       slide_level: 2
 ---
 
-```{r setup, include=TRUE, message=FALSE, warning = FALSE, echo=FALSE, render=FALSE}
+```{r setup, message=F, echo=F, warning=F, render=F}
 knitr::opts_chunk$set(echo = TRUE)
 library(tidyverse)
 library(kableExtra)
@@ -20,7 +20,7 @@ library(kableExtra)
 
 ## Four phases in architecture of diagnostic research
 
-- **Phase I** Do test results in patients with the target disorder differ from those in normal people? Table 1 shows the architecture of this question.
+- **Phase I** Do test results in patients with the target disorder differ from those in normal people? 
 
 - **Phase II** Are patients with certain test results more likely to have the target disorder than patients with other test results?
 
@@ -57,6 +57,17 @@ df %>% kable()
 
 ## Measures of diagnostic accuracy
 
+- Sensitivity and specificity do not depend on the disease prevalence.
+
+- PPV and NPV depend on the sensitivity, specificity, and the disease prevalence.
+
+$PPV=\frac{Se \cdot p}{Se \cdot p + (1-Sp) \cdot (1-p)}$
+  
+$NPV=\frac{Sp \cdot (1-p)}{(1-Se) \cdot p + Sp \cdot (1-p)}$
+
+
+## Measures of diagnostic accuracy
+
 - Frequencies
 ```{r, echo=FALSE}
 
@@ -76,13 +87,15 @@ df <- tibble("  " = c("T+", "T-"),
 df %>% kable()
 ```
 
+- Prevalence = prob[1]+prob[2]
+
+
 ## Bayesian model
 
 ```{r}
 "model {
 
 # likelihood
-
   y[1:4] ~ dmulti(prob[1:4], n)
 
   prob[1] <- p * Se
@@ -91,10 +104,12 @@ df %>% kable()
   prob[4] <- (1 - p) * Sp
 
 # priors
-
   p ~ dbeta(1, 1)
   Se ~ dbeta(1,1)
   Sp ~ dbeta(1,1)
 "
 ```
 
+## Bayesian model
+
+Let's code!
