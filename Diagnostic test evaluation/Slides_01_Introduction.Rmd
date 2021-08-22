@@ -17,6 +17,7 @@ knitr::opts_chunk$set(echo = TRUE)
 library(tidyverse)
 library(runjags)
 ```
+# Introduction to Bayesian Statistics
 
 ## Bayes Rule
 
@@ -72,9 +73,9 @@ There are a number of general purpose languages that allow us to define the prob
 
 - WinBUGS/OpenBUGS
 
-- Bayesian inference Using Gibbs Sampling
-  - JAGS(Just Another Gibbs Sampler)
-	- Stan (named in honour of Stanislaw Ulam, pioneer of the Monte Carlo method)
+- JAGS(Just Another Gibbs Sampler)
+
+- Stan (named in honour of Stanislaw Ulam, pioneer of the Monte Carlo method)
 
 
 ## JAGS
@@ -115,33 +116,41 @@ basicjags <- "model{
 
 ## JAGS
 
-There are two model statements:
+Two model statements in this JAGS model:
 
 1. The number of $Positive$ test samples is Binomially distributed with probability parameter $prevalence$ and total trials $TotalTests$
 ```{r eval=F}
 Positives ~ dbinom(prevalence, TotalTests)
 ```
 
-2. Our prior probability distribution for the parameter $prevalence$ is Beta(2,2)
+2. Our prior probability distribution for the parameter $prevalence$ is a $Beta(2,2)$
 
 ```{r eval=F}
 prevalence ~ dbeta(2,2)
 ```
 
 
-
 ## JAGS
 
-The other lines in this model:
+The other lines in this model are automated hooks that are only used by runjags for:
 
+1. Loading data
 ```{r eval=F}
 #data# Positives, TotalTests
-#monitor# prevalence
-#inits# prevalence
 ```
 
-are automated hooks that are only used by runjags
+2. Monitoring the posterior distribution of interest
+```{r eval=F}
+#monitor# prevalence
+```
 
+3. Initializing the chains
+```{r eval=F}
+#data# Positives, TotalTests
+```
+
+
+## JAGS
 
 This JAGS model is:
 
@@ -178,65 +187,80 @@ results <- run.jags(model = basicjags,
 plot(results)
 ```
 
-```{r}
+```{r, echo=F}
 pt <- plot(results)
 ```
 
----
+## JAGS - Trace plots
 
-Trace plots: the two chains should be stationary:
+The two chains should be stationary.
 
 ```{r echo=FALSE}
 print(pt[[1]])
 ```
 
----
 
-ECDF plots: the two chains should be very close to each other:
+## JAGS - Empirical Cumulative Distribution Function (ECDF) plots
 
-```{r echo=FALSE}
+The two chains should be very close to each other.
+
+```{r echo=F}
 print(pt[[2]])
 ```
 
----
+## JAGS - Histograms
 
-Histogram of the combined chains should appear smooth:
-
-```{r echo=FALSE}
+Histogram of the combined chains should appear smooth.
+```{r echo=F}
 print(pt[[3]])
 ```
 
----
+## JAGS - Autocorrelation plots
 
-Autocorrelation plot tells you how well behaved the model is:
+Autocorrelation plot tells how well behaved the model.
 
-```{r echo=FALSE}
+```{r echo=F}
 print(pt[[4]])
 ```
 
----
+## JAGS - Diagnostics
 
 Then check the effective sample size (SSeff) and Gelman-Rubin statistic (psrf):
 
-```{r}
-results
+```{r echo=F}
+res <- summary(results)[,c(1:3,9,11)]
+res <- round(res, 3)
+res
 ```
-
 
 Reminder:  we want psrf < 1.05 and SSeff > 1000
 
-## Priors: the beta distribution
 
-In blue $Beta(1, 1)$, in red $Beta(2, 2)$.
+## Priors: the *$Beta(\alpha, \beta)$* distribution
 
-```{r, echo = F}
+\textcolor{blue}{$Beta(2, 2)$} \textcolor{red}{$Beta(20, 5)$} \textcolor{green}{$Beta(1, 1)$}
+
+```{r, echo = F, fig.height=3, fig.width=4}
 # Creating x from 0 to 1
 d <- tibble(seq(0, 1, by = 0.025))
 # Plot 
 ggplot(d) +
-  stat_function(fun = function(x) dbeta(x, 2, 2), color = "red", size = 1) +
-  stat_function(fun = function(x) dbeta(x, 1, 1), color = "blue", size = 1) 
+  stat_function(fun = function(x) dbeta(x, 20, 5), color = "red", size = 1) +
+  stat_function(fun = function(x) dbeta(x, 2, 2), color = "blue", size = 1) +
+  stat_function(fun = function(x) dbeta(x, 1, 1), color = "green", size = 1) 
 ```
+
+## Priors: the *$Beta(\alpha, \beta)$* distribution
+
+Common choices: 
+
+- uniform (Bayes-Laplace) prior $Beta(1, 1)$
+- Jeffreys prior $Beta(\frac{1}{2},\frac{1}{2})$
+- "Neutral" prior $Beta(\frac{1}{3},\frac{1}{3})$ proposed by Kerman (2011)
+- Haldane prior $Beta(0, 0)$, or it's approximation $Beta(\epsilon>0, \epsilon>0)$
+
+Parameters of beta prior distribution are commonly considered as "pseudocounts" of successes ($\alpha$) and failures ($\beta$)
+
 
 ## Exercise
 
