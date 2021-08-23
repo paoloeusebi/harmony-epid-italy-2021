@@ -36,7 +36,7 @@ library(readxl)
 
 - The data from the primary studies are summarized in a 2-by-2 cross-tabulation of the dichotomized test result against the true disease status (assuming we have a perfect reference test)
 
-```{r, echo=FALSE, message=FALSE}
+```{r, echo=F, message=F}
 d = matrix(c("TP", "FN","FP", "TN"), nrow = 2,
            dimnames = list(c("T+","T-"),c("D+","D-")))
 d %>%
@@ -50,9 +50,10 @@ d %>%
 - Serological tests for covid-19 from 5 studies on evaluation of ELISA assay for covid-19. (Bastos et al 2020).
 
 ```{r, echo=F}
-df <- read_excel("data/bastos_serological_covid_2020.xlsx")
+library(readxl)
+d <- read_excel("data/bastos_serological_covid_2020.xlsx")
 
-df %>%
+d %>%
   mutate(StudyID = paste("Study", 1:5)) %>%
   select(StudyID, TP, FP, FN, TN) %>%
   kable() %>%
