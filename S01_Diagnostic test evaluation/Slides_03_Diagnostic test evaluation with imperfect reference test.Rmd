@@ -120,8 +120,7 @@ knitr::kable(res)
 
 ## Practicalities
 
-- These models need A LOT of data
-  * And/or strong priors for one of the tests
+- These models need a lot of data and/or strong priors for one of the tests
 
 - Convergence is more problematic than usual
 
@@ -160,7 +159,7 @@ This allows the test to be useless, but not worse than useless
 Analysing simulated data is useful to check that we can recover parameter values.
 
 ```{r}
-se1 <- 0.9; sp1 <- 0.95;
+se1 <- 0.9; sp1 <- 0.95
 se2 <- 0.8; sp2 <- 0.99
 prevalence <- 0.5; N <- 100
 truestatus <- rbinom(N, 1, prevalence)
