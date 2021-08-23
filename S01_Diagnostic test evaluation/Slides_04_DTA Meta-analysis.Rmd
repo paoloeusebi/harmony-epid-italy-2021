@@ -7,12 +7,13 @@ theme: metropolis
 aspectratio: 43
 colortheme: seahorse
 
+params:
+  presentation: yes
+
 output:
   beamer_presentation: 
       slide_level: 2
       
-params:
-  presentation: yes
 ---
 
 ```{r setup, message=F, echo=F, warning=F, render=F}
@@ -28,7 +29,7 @@ library(readxl)
 
 - Important points from previous sessions
 
-# Session 6a: Meta-Analysis of Diagnostic Test Accuracy Studies: Perfect Reference Test
+# Perfect Reference Test
 
 ## DTA-MA: perfect reference test
 
@@ -37,25 +38,284 @@ library(readxl)
 - The data from the primary studies are summarized in a 2-by-2 cross-tabulation of the dichotomized test result against the true disease status (assuming we have a perfect reference test)
 
 ```{r, echo=F, message=F}
-d = matrix(c("TP", "FN","FP", "TN"), nrow = 2,
-           dimnames = list(c("T+","T-"),c("D+","D-")))
-d %>%
-  kable() %>%
-  kable_styling(full_width = F, font_size = 10)
+df <- tibble("  " = c("T+", "T-"),
+             "D+" = c("TP", "FN"),
+             "D-" = c("FP", "TN"))
+
+df %>% kable()
 ```
 ---
 
 ## DTA-MA: perfect reference test
 
-- Serological tests for covid-19 from 5 studies on evaluation of ELISA assay for covid-19. (Bastos et al 2020).
+- Serological tests for covid-19 from 5 studies (but 6 observations) on evaluation of ELISA assay for covid-19 (Bastos et al 2020).
 
 ```{r, echo=F}
 library(readxl)
 d <- read_excel("data/bastos_serological_covid_2020.xlsx")
 
 d %>%
-  mutate(StudyID = paste("Study", 1:5)) %>%
-  select(StudyID, TP, FP, FN, TN) %>%
   kable() %>%
   kable_styling(full_width = F, font_size = 10) 
 ```
+
+## DTA-MA: perfect reference test
+
+- Forest plot of sensitivity
+
+```{r, echo=FALSE}
+forest(madad(d),
+       type = "sens",
+       main = "Sensitivity")
+```
+
+
+## DTA-MA: perfect reference test
+
+- Forest plot of specificity
+
+```{r, echo=FALSE}
+forest(madad(d),
+       type = "spec",
+       main = "Specificity")
+```
+
+
+## DTA-MA: perfect reference test
+
+- Data points with confidence ellipses on a ROC space
+
+```{r, fig.width=5, fig.height=5, echo=FALSE}
+ROCellipse(d, pch = "")
+points(fpr(d), sens(d))
+```
+
+
+## DTA-MA: perfect reference test
+
+Two main frameworks:
+
+- Hierarchical Summary ROC (Rutter and Gatsonis 2001) 
+
+- Bivariate analysis of sensitivity and specificity (Reitsma et al. 2005)
+
+
+## DTA-MA: bivariate analysis of sensitivity and specificity
+
+
+![Alt text](img/bivariate.png)
+
+---
+
+
+## DTA-MA: hierarchical summary ROC (HSROC)
+
+![Alt text](img/hsroc.png)
+
+
+## DTA-MA: bivariate analysis of sensitivity and specificity
+
+Some notation/definitions (no covariates)
+
+$$(\mu_{A_i} \mu_{B_i}) \sim N((\mu_A \mu_B), \Sigma_{AB})$$
+  
+  with 
+
+$$ \Sigma_{AB} = \begin{pmatrix}
+\sigma^2_A    & \sigma^2_{AB} \\\
+\sigma^2_{AB} & \sigma^2_B 
+\end{pmatrix}
+$$
+
+$\mu_{A_i}$ is the logit-transformed sensitivity in study $i$
+$\mu_{B_i}$ is the logit-transformed specificity in study $i$
+
+---
+
+
+## DTA-MA: hierarchical summary ROC (HSROC)
+
+Some notation/definitions (no covariates)
+
+- level I (within study)
+
+$logit(\pi_{ij})=(\theta_i + \alpha_i D_{ij}) \cdot exp(-\beta \cdot D_{ij})$
+
+- level II (between studies)
+
+$\theta_i \sim N(\Theta, \sigma^2_\theta)$
+
+$\alpha_i \sim N(\Lambda, \sigma^2_\alpha)$
+
+$\theta_i$ are cutpoint parameters (or positivity criteria)
+
+$\alpha_i$ are accuracy parameters
+
+$\beta$ is a shape parameter, allowing true-positive and false-positive fractions to increase at different rates as $\theta_i$ increases
+
+---
+
+
+## DTA-MA: bivariate analysis of sensitivity and specificity
+
+Let's run the model with reitsma function (mada R package)
+
+```{r}
+fit.reitsma <- reitsma(d)
+```
+
+## DTA-MA: bivariate analysis of sensitivity and specificity
+
+```{r echo=F}
+round(summary(fit.reitsma)[[1]][,c(1,5,6)], 2)
+```
+
+
+## DTA-MA: bivariate analysis of sensitivity and specificity
+
+```{r, fig.width=6, fig.height=6, echo=FALSE}
+plot(fit.reitsma, cex = 2,
+     sroclwd = 2, plotsumm = T,predict = T,pch = 19,
+     main = "")
+points(fpr(d),
+       sens(d), pch = 1)
+legend("bottomright",
+       c("data points", "summary estimate", "SROC", "95% conf. region", "95% pred.region"),
+       pch = c(1, 19, NA, NA, NA),
+       lwd = c(NA, 2, 2, 1, 1),
+       lty = c(NA, NA, 1,1,3),
+       bty = "n")
+```
+
+---
+
+
+## DTA-MA: bivariate analysis of sensitivity and specificity
+
+- Where is the summary measure of heterogeneity?
+
+- There is $I^2$ for DTA-MA?
+
+---
+
+
+## DTA-MA: bivariate analysis of sensitivity and specificity
+
+The function returns also HSROC parameters
+
+```{r echo=F}
+print(summary(fit.reitsma)[20], digits = 2)
+```
+
+---
+
+## DTA-MA: bivariate analysis of sensitivity and specificity
+
+This is because Bivariate and HSROC approaches are equivalent when covariates are not included (Harbord et al. 2007)
+
+- Parameter estimates from either model can be used to produce a summary operating point, an SROC curve, confidence regions, or prediction regions. 
+
+- The choice between these parameterizations depends partly on the degrees of and reasons for between-study heterogeneity and the treshold effect.
+
+---
+
+
+## DTA-MA: hierarchical summary ROC (HSROC)
+
+Use of HSROC package
+
+```{r, eval=F, echo=T}
+HSROC(data = MRI,
+      iter.num = 5000,
+      init = init)
+HSROCSummary(data = MRI,
+             burn_in = 1000,
+             print_plot = T)
+```
+
+
+# Imperfect Reference Test
+
+## DTA-MA: imperfect reference test(s)
+
+Why?
+
+- Ignoring the imperfect nature of the reference may result in biased estimates of pooled sensitivity and specificity of the test under evaluation
+
+
+## DTA-MA: imperfect reference test(s)
+
+How?
+
+- Multivariate generalized linear mixed model (MGLMM)
+
+- Hierarchical summary receiver operating characteristic (HSROC)
+
+- Exact relations between the parameters of these models can be provided.
+
+- But some submodels of the MGLMM do not have corresponding equivalent submodels of the HSROC model, and vice versa.
+
+---
+
+
+## DTA-MA: HSROC for imperfect reference test(s)
+
+Dendukuri et al. Biometrics. 2012
+
+- The data from the primary studies are summarized in a 2-by-2 cross-tabulation of the index test ($T_1$) result against the imperfect refernce ($T_2$)
+
+```{r, echo=FALSE, message=FALSE}
+library(kableExtra)
+library(tidyverse)
+d = matrix(c("TP", "FN","FP", "TN"), nrow = 2,
+           dimnames = list(c("T1+","T1-"),c("T2+","T2-")))
+d %>%
+  kable() %>%
+  kable_styling(full_width = F, font_size = 10)
+```
+
+The sensitivity and the specificity of the reference test are defined as:
+
+- $S_2 = P(T_2=+|D+)$
+- $C_2 = P(T_2=-|D-)$
+
+---
+
+
+## DTA-MA: discussion
+
+- Comments?
+
+- Questions?
+
+- Ideas?
+
+---
+
+
+## DTA-MA: hierarchical summary ROC (HSROC)
+
+Let's do it with rjags
+
+---
+
+
+## Exercise 
+
+Use Timsit paper data (Prev Vet Med 2016)
+
+```{r, echo=FALSE}
+brd = data.frame(TP = c(49, 37, 265, 121, 195, 157, 127),
+                 FP = c(53, 1, 196, 42, 60, 29, 157),
+                 FN = c(38, 90, 606, 910, 1395, 1344, 4591),
+                 TN = c(64, 18, 969, 592, 373, 806, 8316))
+brd %>%
+  mutate(StudyID = c("Gardner", "Buhman", "Thompson", "Schneider", "Leach", "Tennant", "Rezac")) %>%
+  dplyr::select(StudyID, TP, FP, FN, TN) %>%
+  kable() %>%
+  kable_styling(full_width = F, font_size = 9) 
+```
+
+1. Fit a bivariate model assuming perfect reference with reitsma() in mada
+2. Fit a HSROC model assuming imperfect reference with HSROC() in HSROC
+3. Fit a HSROC model assuming imperfect reference with model definitions in rjags
