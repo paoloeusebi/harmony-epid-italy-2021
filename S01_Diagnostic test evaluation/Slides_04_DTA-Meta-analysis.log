@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.23 (TeX Live 2021/W32TeX) (preloaded format=pdflatex 2021.8.17)  23 AUG 2021 12:04
+This is pdfTeX, Version 3.141592653-2.6-1.40.23 (TeX Live 2021/W32TeX) (preloaded format=pdflatex 2021.8.17)  24 AUG 2021 22:41
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -1375,10 +1375,7 @@ Overfull \vbox (51.40543pt too high) detected at line 434
 
 ] [19
 
-]
-\openout4 = `Slides_04_DTA-Meta-analysis.vrb'.
-
-(./Slides_04_DTA-Meta-analysis.vrb) [20
+] [20
 
 ] [21
 
@@ -1393,15 +1390,132 @@ Overfull \vbox (51.40543pt too high) detected at line 434
 ] [26
 
 ]
-LaTeX Font Info:    External font `lmex10' loaded for size
-(Font)              <9> on input line 615.
-LaTeX Font Info:    Font shape `T1/lmss/m/it' in size <9> not available
-(Font)              Font shape `T1/lmss/m/sl' tried instead on input line 615.
+\openout4 = `Slides_04_DTA-Meta-analysis.vrb'.
 
-Overfull \vbox (19.36383pt too high) detected at line 615
+(./Slides_04_DTA-Meta-analysis.vrb
+Overfull \hbox (49.1316pt too wide) in paragraph at lines 25--25
+[]\T1/lmtt/m/n/10.95 ##      prob[i,1] <- pi[i]*se[i]*s2+(1-pi[i])*(1-sp[i])*(1
+-c2)[] 
+ []
+
+
+Overfull \hbox (49.1316pt too wide) in paragraph at lines 25--25
+[]\T1/lmtt/m/n/10.95 ##      prob[i,2] <- pi[i]*se[i]*(1-s2)+(1-pi[i])*(1-sp[i]
+)*c2[] 
+ []
+
+
+Overfull \hbox (49.1316pt too wide) in paragraph at lines 25--25
+[]\T1/lmtt/m/n/10.95 ##      prob[i,3] <- pi[i]*(1-se[i])*s2+(1-pi[i])*sp[i]*(1
+-c2)[] 
+ []
+
+
+Overfull \hbox (49.1316pt too wide) in paragraph at lines 25--25
+[]\T1/lmtt/m/n/10.95 ##      prob[i,4] <- pi[i]*(1-se[i])*(1-s2)+(1-pi[i])*sp[i
+]*c2[] 
+ []
+
+)
+Overfull \vbox (46.32393pt too high) detected at line 586
  []
 
 [27
+
+]
+\openout4 = `Slides_04_DTA-Meta-analysis.vrb'.
+
+(./Slides_04_DTA-Meta-analysis.vrb
+Overfull \hbox (26.13667pt too wide) in paragraph at lines 28--28
+[]\T1/lmtt/m/n/10.95 ##      # Expressing accuracy in terms of HSROC parameters
+[] 
+ []
+
+
+Overfull \hbox (3.14174pt too wide) in paragraph at lines 28--28
+[]\T1/lmtt/m/n/10.95 ##      logit(se[i]) <- (theta[i] + 0.5*alpha[i])/b[i][] 
+ []
+
+
+Overfull \hbox (8.89047pt too wide) in paragraph at lines 28--28
+[]\T1/lmtt/m/n/10.95 ##      logit(sp[i]) <- -(theta[i] - 0.5*alpha[i])*b[i][] 
+
+ []
+
+)
+Overfull \vbox (90.81035pt too high) detected at line 617
+ []
+
+[28
+
+]
+\openout4 = `Slides_04_DTA-Meta-analysis.vrb'.
+
+(./Slides_04_DTA-Meta-analysis.vrb
+Overfull \hbox (37.63414pt too wide) in paragraph at lines 20--20
+[]\T1/lmtt/m/n/10.95 ##  Se_overall <- 1/(1+exp((-THETA-0.5*LAMBDA)/exp(beta/2)
+))[] 
+ []
+
+
+Overfull \hbox (31.8854pt too wide) in paragraph at lines 20--20
+[]\T1/lmtt/m/n/10.95 ##  Sp_overall <- 1/(1+exp((THETA-0.5*LAMBDA)*exp(beta/2))
+)[] 
+ []
+
+) [29
+
+]
+\openout4 = `Slides_04_DTA-Meta-analysis.vrb'.
+
+(./Slides_04_DTA-Meta-analysis.vrb
+Overfull \hbox (54.88034pt too wide) in paragraph at lines 16--16
+[]\T1/lmtt/m/n/10.95 ##  Se_new <- 1/(1+exp(-(theta_new+0.5*alpha_new)/exp(beta
+/2)))[] 
+ []
+
+
+Overfull \hbox (49.1316pt too wide) in paragraph at lines 16--16
+[]\T1/lmtt/m/n/10.95 ##  Sp_new <- 1/(1+exp((theta_new-0.5*alpha_new)*exp(beta/
+2)))[] 
+ []
+
+) [30
+
+]
+\openout4 = `Slides_04_DTA-Meta-analysis.vrb'.
+
+(./Slides_04_DTA-Meta-analysis.vrb)
+Overfull \vbox (13.52322pt too high) detected at line 685
+ []
+
+[31
+
+]
+\openout4 = `Slides_04_DTA-Meta-analysis.vrb'.
+
+(./Slides_04_DTA-Meta-analysis.vrb
+Overfull \hbox (141.11134pt too wide) in paragraph at lines 29--29
+[]\T1/lmtt/m/n/10.95 ##  # Priors over the accuracy parameters of the imperfect
+ reference test (LU)[] 
+ []
+
+)
+Overfull \vbox (107.36276pt too high) detected at line 717
+ []
+
+[32
+
+]
+LaTeX Font Info:    External font `lmex10' loaded for size
+(Font)              <9> on input line 761.
+LaTeX Font Info:    Font shape `T1/lmss/m/it' in size <9> not available
+(Font)              Font shape `T1/lmss/m/sl' tried instead on input line 761.
+
+Overfull \vbox (19.36383pt too high) detected at line 761
+ []
+
+[33
 
 ]
 \tf@nav=\write7
@@ -1419,10 +1533,10 @@ nged.
 (rerunfilecheck)             Checksum: 04EDFE6D9CD60ADCCFCA17C4684792F4;328.
  ) 
 Here is how much of TeX's memory you used:
- 25012 strings out of 480502
- 495784 string characters out of 5897829
+ 25052 strings out of 480502
+ 496581 string characters out of 5897829
  760966 words of memory out of 5000000
- 42023 multiletter control sequences out of 15000+600000
+ 42035 multiletter control sequences out of 15000+600000
  487495 words of font info for 88 fonts, out of 8000000 for 9000
  14 hyphenation exceptions out of 8191
  101i,13n,113p,1828b,751s stack positions out of 5000i,500n,10000p,200000b,80000s
@@ -1446,10 +1560,10 @@ ic/lm/lmsso8.pfb><c:/Users/E619545/AppData/Roaming/TinyTeX/texmf-dist/fonts/typ
 e1/public/lm/lmsy10.pfb><c:/Users/E619545/AppData/Roaming/TinyTeX/texmf-dist/fo
 nts/type1/public/lm/lmtk10.pfb><c:/Users/E619545/AppData/Roaming/TinyTeX/texmf-
 dist/fonts/type1/public/lm/lmtt10.pfb>
-Output written on Slides_04_DTA-Meta-analysis.pdf (27 pages, 272209 bytes).
+Output written on Slides_04_DTA-Meta-analysis.pdf (33 pages, 279959 bytes).
 PDF statistics:
- 312 PDF objects out of 1000 (max. 8388607)
- 238 compressed objects within 3 object streams
- 81 named destinations out of 1000 (max. 500000)
+ 352 PDF objects out of 1000 (max. 8388607)
+ 272 compressed objects within 3 object streams
+ 99 named destinations out of 1000 (max. 500000)
  89 words of extra memory for PDF output out of 10000 (max. 10000000)
 
