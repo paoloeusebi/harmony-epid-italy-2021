@@ -1,69 +1,15 @@
----
-title: "Diagnostic meta-analysis"
-author: "Paolo Eusebi"
-date: "16/09/2021"
-
-theme: metropolis
-aspectratio: 43
-colortheme: seahorse
-
-params:
-  presentation: yes
-
-output:
-  beamer_presentation: 
-      slide_level: 2
-      
----
-
-```{r setup, message=F, echo=F, warning=F, render=F}
-if(params$presentation) options(width=60)
-knitr::opts_chunk$set(echo = TRUE)
 library(tidyverse)
-library(kableExtra)
 library(mada)
 library(readxl)
-```
 
-## Recap
 
-- Important points from previous sessions
-
-# Perfect Reference Test
-
-## DTA-MA: perfect reference test
-
-- There is an increasing interest in meta-analyzing data from diagnostic accuracy studies
-
-- The data from the primary studies are summarized in a 2-by-2 cross-tabulation of the dichotomized test result against the true disease status (assuming we have a perfect reference test)
-
-```{r, echo=F, message=F}
-df <- tibble("  " = c("T+", "T-"),
-             "D+" = c("TP", "FN"),
-             "D-" = c("FP", "TN"))
-
-df %>% kable()
-```
----
-
-## DTA-MA: perfect reference test
-
-- Serological tests for covid-19 from 5 studies (but 6 observations) on evaluation of ELISA assay for covid-19 (Bastos et al 2020).
-
-```{r, echo=F}
-library(readxl)
 d <- read_excel("data/bastos_serological_covid_2020.xlsx")
-
-d %>%
-  kable() %>%
-  kable_styling(full_width = F, font_size = 10) 
-```
+d
 
 ## DTA-MA: perfect reference test
 
-- Forest plot of sensitivity
+# Forest plot of sensitivity
 
-```{r, echo=FALSE}
 forest(madad(d),
        type = "sens",
        main = "Sensitivity")
@@ -95,7 +41,7 @@ points(fpr(d), sens(d))
 
 Two main frameworks:
 
-- Hierarchical Summary ROC (Rutter and Gatsonis 2001) 
+  - Hierarchical Summary ROC (Rutter and Gatsonis 2001)
 
 - Bivariate analysis of sensitivity and specificity (Reitsma et al. 2005)
 
@@ -108,9 +54,9 @@ Two main frameworks:
 ---
 
 
-## DTA-MA: hierarchical summary ROC (HSROC)
+  ## DTA-MA: hierarchical summary ROC (HSROC)
 
-![Alt text](img/hsroc.png)
+  ![Alt text](img/hsroc.png)
 
 
 ## DTA-MA: bivariate analysis of sensitivity and specificity
@@ -118,36 +64,36 @@ Two main frameworks:
 Some notation/definitions (no covariates)
 
 $$(\mu_{A_i} \mu_{B_i}) \sim N((\mu_A \mu_B), \Sigma_{AB})$$
-  
-  with 
+
+  with
 
 $$ \Sigma_{AB} = \begin{pmatrix}
 \sigma^2_A    & \sigma^2_{AB} \\\
-\sigma^2_{AB} & \sigma^2_B 
+\sigma^2_{AB} & \sigma^2_B
 \end{pmatrix}
 $$
 
-$\mu_{A_i}$ is the logit-transformed sensitivity in study $i$
-$\mu_{B_i}$ is the logit-transformed specificity in study $i$
+  $\mu_{A_i}$ is the logit-transformed sensitivity in study $i$
+  $\mu_{B_i}$ is the logit-transformed specificity in study $i$
 
----
+  ---
 
 
-## DTA-MA: hierarchical summary ROC (HSROC)
+  ## DTA-MA: hierarchical summary ROC (HSROC)
 
-Some notation/definitions (no covariates)
+  Some notation/definitions (no covariates)
 
 - level I (within study)
 
 $logit(\pi_{ij})=(\theta_i + \alpha_i D_{ij}) \cdot exp(-\beta \cdot D_{ij})$
 
-- level II (between studies)
+  - level II (between studies)
 
 $\theta_i \sim N(\Theta, \sigma^2_\theta)$
 
-$\alpha_i \sim N(\Lambda, \sigma^2_\alpha)$
+  $\alpha_i \sim N(\Lambda, \sigma^2_\alpha)$
 
-$\theta_i$ are cutpoint parameters (or positivity criteria)
+  $\theta_i$ are cutpoint parameters (or positivity criteria)
 
 $\alpha_i$ are accuracy parameters
 
@@ -156,9 +102,9 @@ $\beta$ is a shape parameter, allowing true-positive and false-positive fraction
 ---
 
 
-## DTA-MA: bivariate analysis of sensitivity and specificity
+  ## DTA-MA: bivariate analysis of sensitivity and specificity
 
-Let's run the model with reitsma function (mada R package)
+  Let's run the model with reitsma function (mada R package)
 
 ```{r}
 fit.reitsma <- reitsma(d)
@@ -213,7 +159,7 @@ print(summary(fit.reitsma)[20], digits = 2)
 
 This is because Bivariate and HSROC approaches are equivalent when covariates are not included (Harbord et al. 2007)
 
-- Parameter estimates from either model can be used to produce a summary operating point, an SROC curve, confidence regions, or prediction regions. 
+- Parameter estimates from either model can be used to produce a summary operating point, an SROC curve, confidence regions, or prediction regions.
 
 - The choice between these parameterizations depends partly on the degrees of and reasons for between-study heterogeneity and the treshold effect.
 
@@ -284,20 +230,20 @@ Let's do it with rjags
 
 ---
 
-## DTA-MA with JAGS: Likelihood
+  ## DTA-MA with JAGS: Likelihood
 
 
-```{r, echo=F}
+  ```{r, echo=F}
 dta_ma <- c("model {
 
 	for(i in 1:l) {
-		# Likelihood	
+		# Likelihood
 		# se, sp are accuracy of CI
 		# s2, c2 are accuracy of LU
 		# pi is the prevalence
 
 		cell[i,1:4] ~ dmulti(prob[i,1:4],n[i])
-	
+
 		prob[i,1] <- pi[i]*se[i]*s2+(1-pi[i])*(1-sp[i])*(1-c2)
 		prob[i,2] <- pi[i]*se[i]*(1-s2)+(1-pi[i])*(1-sp[i])*c2
 		prob[i,3] <- pi[i]*(1-se[i])*s2+(1-pi[i])*sp[i]*(1-c2)
@@ -313,22 +259,22 @@ dta_ma <- c("model {
 
 		# Priors for CI accuracy
 		theta[i] ~ dnorm(THETA,prec[1])
-		alpha[i] ~ dnorm(LAMBDA,prec[2]) 
+		alpha[i] ~ dnorm(LAMBDA,prec[2])
 
 ","
 		# Priors for prevalence parameters
 		pi[i] ~ dbeta(1,1)
 	}
-	
+
 ","
 
 	# CI accuracy
 	Se_overall <- 1/(1+exp((-THETA-0.5*LAMBDA)/exp(beta/2)))
-	Sp_overall <- 1/(1+exp((THETA-0.5*LAMBDA)*exp(beta/2)))		
-	
+	Sp_overall <- 1/(1+exp((THETA-0.5*LAMBDA)*exp(beta/2)))
+
 	theta_new ~ dnorm(THETA,prec[1])
 	alpha_new ~ dnorm(LAMBDA,prec[2])
-	
+
 ","
 
 	# Predicted values for CI in a new study
@@ -338,14 +284,14 @@ dta_ma <- c("model {
 ","
 
 	# Priors over the accuracy parameters of CI
-	THETA ~ dunif(-2.6,2.6) 
+	THETA ~ dunif(-2.6,2.6)
 	LAMBDA ~ dunif(-5.2,5.2)
 	beta ~ dunif(-1.3,1.3)
 
 	for(j in 1:2) {
-		
-			prec[j] <- pow(sigma[j],-2) 
-			sigma[j] ~ dgamma(4,2)	
+
+			prec[j] <- pow(sigma[j],-2)
+			sigma[j] ~ dgamma(4,2)
 	}
 
 ","
@@ -405,7 +351,7 @@ cat(dta_ma[6], sep='\n')
 
 ```
 
-## Exercise 
+## Exercise
 
 Use Timsit paper data (Prev Vet Med 2016)
 
@@ -418,7 +364,7 @@ brd %>%
   mutate(StudyID = c("Gardner", "Buhman", "Thompson", "Schneider", "Leach", "Tennant", "Rezac")) %>%
   dplyr::select(StudyID, TP, FP, FN, TN) %>%
   kable() %>%
-  kable_styling(full_width = F, font_size = 9) 
+  kable_styling(full_width = F, font_size = 9)
 ```
 
 1. Fit a bivariate model assuming perfect reference with reitsma() in mada
