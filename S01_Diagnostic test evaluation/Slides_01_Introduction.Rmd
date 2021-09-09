@@ -16,6 +16,7 @@ output:
 knitr::opts_chunk$set(echo = TRUE)
 library(tidyverse)
 library(runjags)
+library(rjags)
 ```
 # Introduction to Bayesian Statistics
 
@@ -49,6 +50,93 @@ $$P(\theta|Y) \propto P(\theta)\times P(Y|\theta)$$
 - Our Bayesian posterior is therefore always a combination of the likelihood of the data $P(Y|\theta)$, and the parameter priors $P(\theta)$.
 
 
+## How to get a posterior distribution?
+
+- Analytical derivation 
+- Numerical approximation
+
+
+## Analytical derivation
+
+Analytical derivation could be feasible in some simple cases (Beta-binomial model)
+
+ - Prior $p \sim Beta(\alpha, \beta)$
+ 
+ - Likelihood $Y|p \sim Bin(p, n)$
+ 
+ - Posterior $p|y \sim Beta(\alpha+y, \beta+n-y)$
+ 
+Example:
+Suppose we are testing the fairness of a coin. We observed $n=12$ flips and $y=10$ heads. 
+We assume an uninformative prior.
+
+ - Prior $p \sim Beta(\alpha=1, \beta=1)$
+ 
+ - Likelihood $Y|p \sim Bin(p, 12)$
+ 
+ - Posterior $p|y \sim Beta(\alpha=11, \beta=3)$
+
+
+## Analytical derivation
+
+- Uniform \textcolor{blue}{Prior $Beta(1,1)$}
+
+- \textcolor{red}{Likelihood $Bin(10,12)$}
+
+- \textcolor{green}{Posterior $Beta(11, 3)$}
+
+```{r, echo = F, fig.height=2, fig.width=4}
+# Creating x from 0 to 1
+d <- tibble(seq(0, 1, by = 0.025))
+# Plot 
+ggplot(d) +
+  stat_function(fun = function(x) dbeta(x, 10, 2), color = "red", size = 1) +
+  stat_function(fun = function(x) dbeta(x, 1,  1), color = "blue", size = 1) +
+  stat_function(fun = function(x) dbeta(x, 11, 3), color = "green", size = 1) 
+```
+
+
+## Analytical derivation
+
+- If I change the \textcolor{blue}{Prior} to \textcolor{blue}{$Beta(10, 10)$}
+
+- \textcolor{red}{Likelihood $Bin(10, 12)$}
+
+- \textcolor{green}{Posterior $Beta(20, 12)$}
+
+```{r, echo = F, fig.height=2, fig.width=4}
+# Creating x from 0 to 1
+d <- tibble(seq(0, 1, by = 0.025))
+# Plot 
+ggplot(d) +
+  stat_function(fun = function(x) dbeta(x, 10, 2), color = "red", size = 1) +
+  stat_function(fun = function(x) dbeta(x, 10, 10), color = "blue", size = 1) +
+  stat_function(fun = function(x) dbeta(x, 20, 12), color = "green", size = 1) 
+```
+
+
+## A quick look at the Beta distribution.
+
+- The Beta distribution is a family of continuous probability distributions defined on the [0, 1] interval parameterized by two positive "shape" parameters  $\alpha$ and $\beta$.
+
+- Parameters of Beta distribution are commonly considered as "pseudo-counts" of successes ($\alpha$) and failures ($\beta$)
+
+- $Y \sim Beta(\alpha, \beta)=\frac{x^{\alpha-1}(1-x)^{\beta-1}}{B(\alpha, \beta)}$
+
+- $E(Y)=\frac{\alpha}{\alpha+\beta}$
+
+- $Var(Y)=\frac{\alpha\beta}{(\alpha+\beta)^2+(\alpha+\beta+1)}$
+
+## MCMC
+
+- Markov chain Monte Carlo (MCMC) methods comprise a class of algorithms for sampling from a probability distribution. 
+
+- By constructing a Markov chain that has the desired distribution as its equilibrium distribution, one can obtain a sample of the desired distribution by recording states from the chain. 
+
+- The more steps are included, the more closely the distribution of the sample matches the actual desired distribution. 
+
+- Various algorithms exist for constructing chains, including the Metropolis–Hastings algorithm.
+
 
 ## MCMC
 
@@ -67,7 +155,7 @@ $$P(\theta|Y) \propto P(\theta)\times P(Y|\theta)$$
 
 ## MCMC in practice
 
-We can write a Metropolis algorithm but this is complex and inefficient
+We can write a Metropolis–Hastings algorithm but this is complex and inefficient
 
 There are a number of general purpose languages that allow us to define the problem and leave the details to the software:
 
@@ -83,10 +171,12 @@ There are a number of general purpose languages that allow us to define the prob
 JAGS uses the BUGS language
 
 - This is a declarative (non-procedural) language
-- The order of statements does not matter
-- The compiler converts our model syntax into an MCMC algorithm with appropriately defined likelihood and priors
-- You can only define each variable once!!!
 
+- The order of statements does not matter
+
+- The compiler converts our model syntax into an MCMC algorithm with appropriately defined likelihood and priors
+
+- You can only define each variable once!!!
 
 Different ways to run JAGS from R: rjags, runjags, R2jags, jagsUI
 
@@ -109,9 +199,7 @@ basicjags <- "model{
   #inits# prevalence
 }
 "
-
 ```
-
 
 
 ## JAGS
@@ -254,12 +342,10 @@ ggplot(d) +
 
 Common choices: 
 
-- uniform (Bayes-Laplace) prior $Beta(1, 1)$
+- Uniform prior $Beta(1, 1)$ (Bayes-Laplace)
 - Jeffreys prior $Beta(\frac{1}{2},\frac{1}{2})$
-- "Neutral" prior $Beta(\frac{1}{3},\frac{1}{3})$ proposed by Kerman (2011)
+- "Neutral" prior $Beta(\frac{1}{3},\frac{1}{3})$ (Kerman 2011)
 - Haldane prior $Beta(0, 0)$, or it's approximation $Beta(\epsilon>0, \epsilon>0)$
-
-Parameters of beta prior distribution are commonly considered as "pseudocounts" of successes ($\alpha$) and failures ($\beta$)
 
 
 ## Exercise
@@ -275,3 +361,4 @@ Parameters of beta prior distribution are commonly considered as "pseudocounts" 
 - Change the priors
 
 - Increase the sample size
+
