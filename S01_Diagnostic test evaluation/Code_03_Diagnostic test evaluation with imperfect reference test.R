@@ -2,15 +2,16 @@ library(runjags)
 library(rjags)
 testjags()
 
-y <- c(48, 12, 4, 36)
-n <- sum(y)
+# 0 = Test Negative; 1 = Test Positive
+y <- c(48, 12, 4, 36); y
+n <- sum(y); n
 
 t <- matrix(
   y,
   nrow = 2,
   byrow = F,
-  dimnames = list(c("T1+", "T1-"),
-                  c("T2+", "T2-")))
+  dimnames = list(0:1,
+                  0:1))
 t
 
 # HW Model: 2 tests, 1 population
@@ -23,16 +24,18 @@ hw_2t_1p <- c("model{
 	prob[2] <- (p*((se[1])*(1-se[2]))) + ((1-p)*((1-sp[1])*(sp[2])))
   # Test1- Test2+
 	prob[3] <- (p*((1-se[1])*(se[2]))) + ((1-p)*((sp[1])*(1-sp[2])))
-  # Test1+ Test2+
+	# Test1+ Test2+
 	prob[4] <- (p*((se[1])*(se[2]))) + ((1-p)*((1-sp[1])*(1-sp[2])))
+
 	", "
+
   p ~ dbeta(1, 1)
   se[1] ~ dbeta(1, 1)
   sp[1] ~ dbeta(1, 1)
   se[2] ~ dbeta(1, 1)
   sp[2] ~ dbeta(1, 1)
   #data# y, n
-  #monitor# p, prob, se, sp
+  #monitor# p, se, sp
   #inits# p, se, sp
 }
 ")
@@ -42,7 +45,7 @@ hw_2t_1p <- c("model{
 # se <- list(chain1=c(0.5,0.99), chain2=c(0.99,0.5))
 # sp <- list(chain1=c(0.5,0.99), chain2=c(0.99,0.5))
 
-# initial values for the three chains
+# initial values for 2 chains
 inits1 = list(".RNG.name" ="base::Mersenne-Twister", ".RNG.seed" = 100022)
 inits2 = list(".RNG.name" ="base::Mersenne-Twister", ".RNG.seed" = 300022)
 
@@ -50,8 +53,8 @@ inits2 = list(".RNG.name" ="base::Mersenne-Twister", ".RNG.seed" = 300022)
 # run
 results <- run.jags(hw_2t_1p,
                     n.chains = 2,
-                    burnin = 1000,
-                    sample = 5000)
+                    burnin = 5000,
+                    sample = 15000)
 
 print(results)
 
@@ -64,27 +67,25 @@ plot(results,
 # we can recover parameter values.
 se1 <- 0.9; sp1 <- 0.95
 se2 <- 0.8; sp2 <- 0.99
-prevalence <- 0.5; N <- 100000
-truestatus <- rbinom(N, 1, prevalence)
-Test1 <- rbinom(N, 1, (truestatus * se1) + ((1-truestatus) * (1-sp1)))
-Test2 <- rbinom(N, 1, (truestatus * se2) + ((1-truestatus) * (1-sp2)))
-t <- matrix(
-  y,
-  nrow = 2,
-  byrow = F,
-  dimnames = list(c("T1+", "T1-"),
-                  c("T2+", "T2-")))
-t
-y <- as.numeric(t)
-n <- sum(y)
+prevalence <- 0.9; n <- 1000
+truestatus <- rbinom(n, 1, prevalence)
+Test1 <- rbinom(n, 1, (truestatus * se1) + ((1-truestatus) * (1-sp1)))
+Test2 <- rbinom(n, 1, (truestatus * se2) + ((1-truestatus) * (1-sp2)))
+t <- table(Test1, Test2); t
+y <- as.numeric(t); y
+n <- sum(y); n
 
 results <- run.jags(hw_2t_1p,
-                    n.chains=2,
-                    burnin = 1000,
-                    sample = 5000)
+                    n.chains =2,
+                    inits = list(inits1, inits2),
+                    burnin = 5000,
+                    sample = 15000)
+print(results)
+
+# How well do we recover our parameters?
 
 
-# Constraints on the priors
+# Imposing constraints on the priors
 hw_2t_1p_priors <- "model{
   y ~ dmulti(prob, n)
 
@@ -103,38 +104,40 @@ hw_2t_1p_priors <- "model{
   se[2] ~ dbeta(HPSe[2,1], HPSe[2,2])T(1-sp[2], )
   sp[2] ~ dbeta(HPSp[2,1], HPSp[2,2])
   #data# y, n, HPSe, HPSp
-  #monitor# p, prob, se, sp
+  #monitor# p, se, sp
   #inits# p, se, sp
 }
 "
 
 # Note that we specify the prior hyperparameters as data so we can change these from R without havíng to edit the model file (this is optional!)
 
+# Simulate again
 se1 <- 0.9; sp1 <- 0.95
 se2 <- 0.8; sp2 <- 0.99
 prevalence <- 0.5
 # Change N to be 10, 100 or 1000:
-N <- 100
-truestatus <- rbinom(N, 1, prevalence)
-Test1 <- rbinom(N, 1, (truestatus * se1) + ((1-truestatus) * (1-sp1)))
-Test2 <- rbinom(N, 1, (truestatus * se2) + ((1-truestatus) * (1-sp2)))
-t <- table(Test1, Test2)
-t
-y <- as.numeric(t)
-TotalTests <- sum(y)
+n <- 1000
+truestatus <- rbinom(n, 1, prevalence)
+Test1 <- rbinom(n, 1, (truestatus * se1) + ((1-truestatus) * (1-sp1)))
+Test2 <- rbinom(n, 1, (truestatus * se2) + ((1-truestatus) * (1-sp2)))
+t <- table(Test1, Test2); t
+y <- as.numeric(t); y
+n <- sum(y); n
+
 HPSe <- matrix(c(1,1,1,1), nrow=2, ncol=2)
 HPSp <- matrix(c(1,1,1,1), nrow=2, ncol=2)
-prev <- list(chain1=0.05, chain2=0.95)
+
+# Initial values for two chains
+p <- list(chain1=0.05, chain2=0.95)
 se <- list(chain1=c(0.5,0.99), chain2=c(0.99,0.5))
 sp <- list(chain1=c(0.5,0.99), chain2=c(0.99,0.5))
 results <- run.jags(hw_2t_1p_priors,
                     n.chains=2,
                     burnin = 5000,
-                    sample = 100000)
+                    sample = 10000)
 results
 
 # How well do we recover our parameters?
-
 
 # H-W Model: 2 tests, m pops
 hw_2t_mpops <- c("model{
@@ -144,10 +147,15 @@ hw_2t_mpops <- c("model{
                 # likelihood
 
                 y[i,1:4] ~ dmulti(prob[i,1:4],n[i])
-                prob[i,1] <- pi[i]*(se[1]*se[2]) + (1-pi[i])*((1-sp[1])*(1-sp[2]))
-                prob[i,2] <- pi[i]*(se[1]*(1-se[2])) + (1-pi[i])*((1-sp[1])*sp[2])
-                prob[i,3] <- pi[i]*((1-se[1])*se[2]) + (1-pi[i])*(sp[1]*(1-sp[2]))
-                prob[i,4] <- pi[i]*((1-se[1])*(1-se[2])) + (1-pi[i])*(sp[1]*sp[2])
+
+                  # Test1- Test2-
+                  prob[i,1] <- (pi[i] * ((1-se[1])*(1-se[2]))) + ((1-pi[i]) * ((sp[1])*(sp[2])))
+                  # Test1+ Test2-
+                  prob[i,2] <- (pi[i] * ((se[1])*(1-se[2]))) + ((1-pi[i]) * ((1-sp[1])*(sp[2])))
+                  # Test1- Test2+
+                  prob[i,3] <- (pi[i] * ((1-se[1])*(se[2]))) + ((1-pi[i]) * ((sp[1])*(1-sp[2])))
+                  # Test1+ Test2+
+                  prob[i,4] <- (pi[i] * ((se[1])*(se[2]))) + ((1-pi[i]) * ((1-sp[1])*(1-sp[2])))
 
                 # priors for prevalence parameters
                 pi[i] ~ dbeta(1,1)
@@ -161,36 +169,52 @@ hw_2t_mpops <- c("model{
   sp[2] ~ dbeta(1, 1)
 
   #data# m, n, y
+  #inits#
   #monitor# se, sp, pi
 }
 ")
 
+# Simulate two pops
+se1 <- 0.9; sp1 <- 0.95 # Test 1
+se2 <- 0.8; sp2 <- 0.99 # Test 2
+pr1 <- 0.25; pr2 <- 0.5 # prevalences
+n1 <- 10000; n2 <- 20000 # sample size
 
-y_ <- c(48, 12, 4, 36,
-       620, 10, 20, 60)
+truestatus1 <- rbinom(n1, 1, pr1)
+truestatus2 <- rbinom(n2, 1, pr2)
+truestatus <- c(truestatus1, truestatus2)
+pop <- c(rep(1,n1), rep(2,n2))
+
+Test1 <- rbinom(n1+n2, 1, (truestatus * se1) + ((1-truestatus) * (1-sp1)))
+Test2 <- rbinom(n1+n2, 1, (truestatus * se2) + ((1-truestatus) * (1-sp2)))
+
+df <- data.frame(pop, Test1, Test2)
+
+t <- table(df$Test1, df$Test2, df$pop); t
+y_ <- as.numeric(t); y_
 
 y <- matrix(
   y_,
   nrow = 2,
   byrow = T)
-  # dimnames = list(c("T1+/T2+", "T1-/T2+", "T1+/T2-", "T1-/T2-"),
-  #                 c("pop1", "pop2")))
 y
 
 m = 2 # number of populations
-n = apply(y, 1, sum)
-n
+n = apply(y, 1, sum); n
 
-# initial values for the three chains
+# initial values for two chains
 inits1 = list(".RNG.name" ="base::Mersenne-Twister", ".RNG.seed" = 100022)
 inits2 = list(".RNG.name" ="base::Mersenne-Twister", ".RNG.seed" = 300022)
 
 results <- run.jags(hw_2t_mpops,
                     n.chains=2,
-                    burnin = 5000,
-                    sample = 10000)
+                    inits = list(inits1, inits2),
+                    burnin = 10000,
+                    sample = 100000)
 results
 plot(results,
      vars = list("se", "sp", "pi"),
      layout = c(3, 6),
      plot.type = c("trace", "histogram", "autocorr"))
+
+# How well do we recover our parameters?
