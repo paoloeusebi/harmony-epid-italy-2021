@@ -16,6 +16,8 @@ A repository for sharing R code for the two-day training school, hosted in Perug
 - runjags
 - rjags 
 - kableExtra
+- mada
+- readxl
 
 ## Session info
 R version 4.0.2

@@ -1,8 +1,10 @@
+# load/test packages
 library(tidyverse)
 library(mada)
 library(runjags)
 library(rjags)
 library(readxl)
+testjags()
 
 
 d <- read_excel("S01_Diagnostic test evaluation/data/bastos_serological_covid_2020.xlsx",
@@ -163,5 +165,7 @@ plot(results,vars = "c2",
 
 
 # Use another dataset
+# d <- read_excel("S01_Diagnostic test evaluation/data/bastos_serological_covid_2020.xlsx",
+# sheet = "elisa")
 
 # add your code here!
