@@ -1,11 +1,11 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.23 (TeX Live 2021/W32TeX) (preloaded format=pdflatex 2021.8.17)  19 AUG 2021 18:06
+This is pdfTeX, Version 3.141592653-2.6-1.40.23 (TeX Live 2021/W32TeX) (preloaded format=pdflatex 2021.9.10)  10 SEP 2021 14:40
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
 **Slides_03_Diagnostic-test-evaluation-with-imperfect-reference-test.tex
 (./Slides_03_Diagnostic-test-evaluation-with-imperfect-reference-test.tex
 LaTeX2e <2021-06-01> patch level 1
-L3 programming layer <2021-07-12>
+L3 programming layer <2021-08-27>
 (c:/Users/E619545/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/beamer/beamer.cl
 s
 Document Class: beamer 2021/05/26 v3.63 A class for typesetting presentations
@@ -1229,6 +1229,15 @@ LaTeX Font Info:    Font shape `T1/lmss/m/it' in size <6> not available
 
 ] [4
 
+] [5
+
+]
+Overfull \hbox (74.032pt too wide) in paragraph at lines 253--253
+[][]  
+ []
+
+[6
+
 ]
 \openout4 = `Slides_03_Diagnostic-test-evaluation-with-imperfect-reference-test
 .vrb'.
@@ -1262,21 +1271,6 @@ Overfull \hbox (83.62401pt too wide) in paragraph at lines 17--17
 1-sp[2])))[] 
  []
 
-) [5
-
-]
-\openout4 = `Slides_03_Diagnostic-test-evaluation-with-imperfect-reference-test
-.vrb'.
-
-(./Slides_03_Diagnostic-test-evaluation-with-imperfect-reference-test.vrb) [6
-
-]
-\openout4 = `Slides_03_Diagnostic-test-evaluation-with-imperfect-reference-test
-.vrb'.
-
-(./Slides_03_Diagnostic-test-evaluation-with-imperfect-reference-test.vrb
-LaTeX Font Info:    Font shape `T1/lmtt/bx/n' in size <10.95> not available
-(Font)              Font shape `T1/lmtt/b/n' tried instead on input line 16.
 ) [7
 
 ]
@@ -1285,361 +1279,63 @@ LaTeX Font Info:    Font shape `T1/lmtt/bx/n' in size <10.95> not available
 
 (./Slides_03_Diagnostic-test-evaluation-with-imperfect-reference-test.vrb) [8
 
-] [9
+]
+\openout4 = `Slides_03_Diagnostic-test-evaluation-with-imperfect-reference-test
+.vrb'.
+
+(./Slides_03_Diagnostic-test-evaluation-with-imperfect-reference-test.vrb
+LaTeX Font Info:    Font shape `T1/lmtt/bx/n' in size <10.95> not available
+(Font)              Font shape `T1/lmtt/b/n' tried instead on input line 16.
+) [9
+
+]
+\openout4 = `Slides_03_Diagnostic-test-evaluation-with-imperfect-reference-test
+.vrb'.
+
+(./Slides_03_Diagnostic-test-evaluation-with-imperfect-reference-test.vrb) [10
+
+] [11
 
 ]
 \openout4 = `Slides_03_Diagnostic-test-evaluation-with-imperfect-reference-test
 .vrb'.
 
 (./Slides_03_Diagnostic-test-evaluation-with-imperfect-reference-test.vrb)
-Overfull \vbox (6.09727pt too high) detected at line 337
+Overfull \vbox (6.09727pt too high) detected at line 407
  []
 
-[10
+[12
 
 ]
 \openout4 = `Slides_03_Diagnostic-test-evaluation-with-imperfect-reference-test
 .vrb'.
 
-(./Slides_03_Diagnostic-test-evaluation-with-imperfect-reference-test.vrb) [11
-
-] [12
-
-]
-\openout4 = `Slides_03_Diagnostic-test-evaluation-with-imperfect-reference-test
-.vrb'.
-
-(./Slides_03_Diagnostic-test-evaluation-with-imperfect-reference-test.vrb
-Overfull \hbox (106.61894pt too wide) in paragraph at lines 28--28
-[]    \T1/lmtt/m/n/10.95 prob[1] <- (p * ((1-se[1])*(1-se[2]))) + ((1-p) * ((sp
-[1])*(sp[2])))[] 
- []
-
-
-Overfull \hbox (106.61894pt too wide) in paragraph at lines 28--28
-[]    \T1/lmtt/m/n/10.95 prob[2] <- (p * ((se[1])*(1-se[2]))) + ((1-p) * ((1-sp
-[1])*(sp[2])))[] 
- []
-
-
-Overfull \hbox (106.61894pt too wide) in paragraph at lines 28--28
-[]    \T1/lmtt/m/n/10.95 prob[3] <- (p * ((1-se[1])*(se[2]))) + ((1-p) * ((sp[1
-])*(1-sp[2])))[] 
- []
-
-
-Overfull \hbox (106.61894pt too wide) in paragraph at lines 28--28
-[]    \T1/lmtt/m/n/10.95 prob[4] <- (p * ((se[1])*(se[2]))) + ((1-p) * ((1-sp[1
-])*(1-sp[2])))[] 
- []
-
-
-Overfull \hbox (152.60881pt too wide) in paragraph at lines 73--73
-[]\T1/lmtt/m/n/10.95 ## Warning in if (class(temp) == "function") {: la condizi
-one la lunghezza > 1 e[] 
- []
-
-
-Overfull \hbox (158.35754pt too wide) in paragraph at lines 78--78
-[]\T1/lmtt/m/n/10.95 ## Warning in if (class(temp) == "list") {: la condizione 
-la lunghezza > 1 e solo[] 
- []
-
-
-Overfull \hbox (146.86008pt too wide) in paragraph at lines 83--83
-[]\T1/lmtt/m/n/10.95 ## Warning in while (class(temp) == "list") temp <- temp[[
-1]]: la condizione la[] 
- []
-
-
-Overfull \hbox (26.13667pt too wide) in paragraph at lines 83--83
-[]\T1/lmtt/m/n/10.95 ## lunghezza > 1 e solo il promo elemento verrà utilizzato
-[] 
- []
-
-
-Overfull \hbox (129.61388pt too wide) in paragraph at lines 89--89
-[]\T1/lmtt/m/n/10.95 ## Warning in if (!class(temp) %in% permitted.formats) sto
-p(paste("An object[] 
- []
-
-
-Overfull \hbox (169.85501pt too wide) in paragraph at lines 89--89
-[]\T1/lmtt/m/n/10.95 ## matching the variable name \"", : la condizione la lung
-hezza > 1 e solo il promo[] 
- []
-
-
-Overfull \hbox (152.60881pt too wide) in paragraph at lines 94--94
-[]\T1/lmtt/m/n/10.95 ## Warning in if (class(temp) == "function") {: la condizi
-one la lunghezza > 1 e[] 
- []
-
-
-Overfull \hbox (158.35754pt too wide) in paragraph at lines 99--99
-[]\T1/lmtt/m/n/10.95 ## Warning in if (class(temp) == "list") {: la condizione 
-la lunghezza > 1 e solo[] 
- []
-
-
-Overfull \hbox (146.86008pt too wide) in paragraph at lines 104--104
-[]\T1/lmtt/m/n/10.95 ## Warning in while (class(temp) == "list") temp <- temp[[
-1]]: la condizione la[] 
- []
-
-
-Overfull \hbox (26.13667pt too wide) in paragraph at lines 104--104
-[]\T1/lmtt/m/n/10.95 ## lunghezza > 1 e solo il promo elemento verrà utilizzato
-[] 
- []
-
-
-Overfull \hbox (129.61388pt too wide) in paragraph at lines 110--110
-[]\T1/lmtt/m/n/10.95 ## Warning in if (!class(temp) %in% permitted.formats) sto
-p(paste("An object[] 
- []
-
-
-Overfull \hbox (169.85501pt too wide) in paragraph at lines 110--110
-[]\T1/lmtt/m/n/10.95 ## matching the variable name \"", : la condizione la lung
-hezza > 1 e solo il promo[] 
- []
-
-
-Overfull \hbox (43.38287pt too wide) in paragraph at lines 122--122
-[]\T1/lmtt/m/n/10.95 ## Calculating the Gelman-Rubin statistic for 9 variables.
-...[] 
- []
-
-
-Overfull \hbox (187.10121pt too wide) in paragraph at lines 157--157
-[]\T1/lmtt/m/n/10.95 ## JAGS model summary statistics from 20000 samples (chain
-s = 2; adapt+burnin = 5000):[] 
- []
-
-
-Overfull \hbox (164.10628pt too wide) in paragraph at lines 157--157
-[]\T1/lmtt/m/n/10.95 ##          Lower95  Median Upper95    Mean       SD Mode 
-     MCerr MC%ofSD SSeff[] 
- []
-
-
-Overfull \hbox (164.10628pt too wide) in paragraph at lines 157--157
-[]\T1/lmtt/m/n/10.95 ## p        0.32501 0.47205  0.6293 0.47222 0.079088   -- 
- 0.0013699     1.7  3333[] 
- []
-
-
-Overfull \hbox (164.10628pt too wide) in paragraph at lines 157--157
-[]\T1/lmtt/m/n/10.95 ## prob[1]  0.30591 0.40018 0.49314 0.40037 0.048136   -- 
-0.00040641     0.8 14028[] 
- []
-
-
-Overfull \hbox (164.10628pt too wide) in paragraph at lines 157--157
-[]\T1/lmtt/m/n/10.95 ## prob[2] 0.066269 0.12457 0.19282  0.1273 0.032962   -- 
-0.00029409     0.9 12563[] 
- []
-
-
-Overfull \hbox (164.10628pt too wide) in paragraph at lines 157--157
-[]\T1/lmtt/m/n/10.95 ## prob[3]  0.05285 0.10539 0.17077 0.10816  0.03072   -- 
-0.00027572     0.9 12414[] 
- []
-
-
-Overfull \hbox (164.10628pt too wide) in paragraph at lines 157--157
-[]\T1/lmtt/m/n/10.95 ## prob[4]  0.27189 0.36289  0.4562 0.36417 0.047472   -- 
-0.00040754     0.9 13568[] 
- []
-
-
-Overfull \hbox (164.10628pt too wide) in paragraph at lines 157--157
-[]\T1/lmtt/m/n/10.95 ## se[1]    0.74239 0.88426       1 0.87823 0.076668   -- 
- 0.0011933     1.6  4128[] 
- []
-
-
-Overfull \hbox (164.10628pt too wide) in paragraph at lines 157--157
-[]\T1/lmtt/m/n/10.95 ## se[2]    0.71664 0.87085 0.99997 0.86471 0.084293   -- 
- 0.0014501     1.7  3379[] 
- []
-
-
-Overfull \hbox (164.10628pt too wide) in paragraph at lines 157--157
-[]\T1/lmtt/m/n/10.95 ## sp[1]    0.71839 0.85786 0.99993 0.85596 0.081731   -- 
- 0.0013904     1.7  3455[] 
- []
-
-
-Overfull \hbox (164.10628pt too wide) in paragraph at lines 157--157
-[]\T1/lmtt/m/n/10.95 ## sp[2]    0.75024 0.88167 0.99996 0.87719 0.072584   -- 
- 0.0011372     1.6  4074[] 
- []
-
-)
-Overfull \vbox (1807.82726pt too high) detected at line 584
+(./Slides_03_Diagnostic-test-evaluation-with-imperfect-reference-test.vrb)
+Overfull \vbox (14.69524pt too high) detected at line 432
  []
 
 [13
 
 ] [14
 
+] [15
+
 ]
-\openout4 = `Slides_03_Diagnostic-test-evaluation-with-imperfect-reference-test
-.vrb'.
+LaTeX Font Info:    External font `lmex10' loaded for size
+(Font)              <5> on input line 496.
+LaTeX Font Info:    Font shape `T1/lmss/m/it' in size <5> not available
+(Font)              Font shape `T1/lmss/m/sl' tried instead on input line 496.
 
-(./Slides_03_Diagnostic-test-evaluation-with-imperfect-reference-test.vrb
-Overfull \hbox (152.60881pt too wide) in paragraph at lines 39--39
-[]\T1/lmtt/m/n/10.95 ## Warning in if (class(temp) == "function") {: la condizi
-one la lunghezza > 1 e[] 
+Overfull \hbox (13.76933pt too wide) in paragraph at lines 496--496
+[][]  
  []
 
 
-Overfull \hbox (158.35754pt too wide) in paragraph at lines 44--44
-[]\T1/lmtt/m/n/10.95 ## Warning in if (class(temp) == "list") {: la condizione 
-la lunghezza > 1 e solo[] 
+Overfull \hbox (13.76933pt too wide) in paragraph at lines 496--496
+[][]  
  []
 
-
-Overfull \hbox (146.86008pt too wide) in paragraph at lines 49--49
-[]\T1/lmtt/m/n/10.95 ## Warning in while (class(temp) == "list") temp <- temp[[
-1]]: la condizione la[] 
- []
-
-
-Overfull \hbox (26.13667pt too wide) in paragraph at lines 49--49
-[]\T1/lmtt/m/n/10.95 ## lunghezza > 1 e solo il promo elemento verrà utilizzato
-[] 
- []
-
-
-Overfull \hbox (129.61388pt too wide) in paragraph at lines 55--55
-[]\T1/lmtt/m/n/10.95 ## Warning in if (!class(temp) %in% permitted.formats) sto
-p(paste("An object[] 
- []
-
-
-Overfull \hbox (169.85501pt too wide) in paragraph at lines 55--55
-[]\T1/lmtt/m/n/10.95 ## matching the variable name \"", : la condizione la lung
-hezza > 1 e solo il promo[] 
- []
-
-
-Overfull \hbox (152.60881pt too wide) in paragraph at lines 60--60
-[]\T1/lmtt/m/n/10.95 ## Warning in if (class(temp) == "function") {: la condizi
-one la lunghezza > 1 e[] 
- []
-
-
-Overfull \hbox (158.35754pt too wide) in paragraph at lines 65--65
-[]\T1/lmtt/m/n/10.95 ## Warning in if (class(temp) == "list") {: la condizione 
-la lunghezza > 1 e solo[] 
- []
-
-
-Overfull \hbox (146.86008pt too wide) in paragraph at lines 70--70
-[]\T1/lmtt/m/n/10.95 ## Warning in while (class(temp) == "list") temp <- temp[[
-1]]: la condizione la[] 
- []
-
-
-Overfull \hbox (26.13667pt too wide) in paragraph at lines 70--70
-[]\T1/lmtt/m/n/10.95 ## lunghezza > 1 e solo il promo elemento verrà utilizzato
-[] 
- []
-
-
-Overfull \hbox (129.61388pt too wide) in paragraph at lines 76--76
-[]\T1/lmtt/m/n/10.95 ## Warning in if (!class(temp) %in% permitted.formats) sto
-p(paste("An object[] 
- []
-
-
-Overfull \hbox (169.85501pt too wide) in paragraph at lines 76--76
-[]\T1/lmtt/m/n/10.95 ## matching the variable name \"", : la condizione la lung
-hezza > 1 e solo il promo[] 
- []
-
-
-Overfull \hbox (43.38287pt too wide) in paragraph at lines 88--88
-[]\T1/lmtt/m/n/10.95 ## Calculating the Gelman-Rubin statistic for 9 variables.
-...[] 
- []
-
-
-Overfull \hbox (187.10121pt too wide) in paragraph at lines 123--123
-[]\T1/lmtt/m/n/10.95 ## JAGS model summary statistics from 20000 samples (chain
-s = 2; adapt+burnin = 5000):[] 
- []
-
-
-Overfull \hbox (141.11134pt too wide) in paragraph at lines 123--123
-[]\T1/lmtt/m/n/10.95 ##          Lower95   Median Upper95     Mean       SD Mod
-e      MCerr MC%ofSD[] 
- []
-
-
-Overfull \hbox (141.11134pt too wide) in paragraph at lines 123--123
-[]\T1/lmtt/m/n/10.95 ## p        0.39656  0.51628 0.62734  0.51618 0.058804   -
-- 0.00060154       1[] 
- []
-
-
-Overfull \hbox (141.11134pt too wide) in paragraph at lines 123--123
-[]\T1/lmtt/m/n/10.95 ## prob[1]  0.31831  0.41078 0.50589  0.41163 0.048155   -
-- 0.00041233     0.9[] 
- []
-
-
-Overfull \hbox (141.11134pt too wide) in paragraph at lines 123--123
-[]\T1/lmtt/m/n/10.95 ## prob[2] 0.059047  0.11277 0.17739  0.11527 0.031022   -
--  0.0002873     0.9[] 
- []
-
-
-Overfull \hbox (141.11134pt too wide) in paragraph at lines 123--123
-[]\T1/lmtt/m/n/10.95 ## prob[3]  0.04807 0.096462 0.15435 0.099527 0.028273   -
-- 0.00028182       1[] 
- []
-
-
-Overfull \hbox (141.11134pt too wide) in paragraph at lines 123--123
-[]\T1/lmtt/m/n/10.95 ## prob[4]  0.28775  0.37252 0.46993  0.37357 0.046729   -
-- 0.00042015     0.9[] 
- []
-
-
-Overfull \hbox (141.11134pt too wide) in paragraph at lines 123--123
-[]\T1/lmtt/m/n/10.95 ## se[1]    0.85605  0.90143 0.94424  0.89996 0.022966   -
-- 0.00024051       1[] 
- []
-
-
-Overfull \hbox (141.11134pt too wide) in paragraph at lines 123--123
-[]\T1/lmtt/m/n/10.95 ## se[2]    0.67473  0.80187 0.92074  0.79899 0.063559   -
-- 0.00060869       1[] 
- []
-
-
-Overfull \hbox (141.11134pt too wide) in paragraph at lines 123--123
-[]\T1/lmtt/m/n/10.95 ## sp[1]    0.92126  0.95081 0.97448  0.94945 0.013968   -
-- 0.00014316       1[] 
- []
-
-
-Overfull \hbox (141.11134pt too wide) in paragraph at lines 123--123
-[]\T1/lmtt/m/n/10.95 ## sp[2]    0.76018  0.87937 0.99299  0.87537 0.062121   -
-- 0.00066431     1.1[] 
- []
-
-)
-Overfull \vbox (1393.65787pt too high) detected at line 796
- []
-
-[15
-
-] [16
+[16
 
 ] [17
 
@@ -1648,7 +1344,7 @@ Overfull \vbox (1393.65787pt too high) detected at line 796
 .vrb'.
 
 (./Slides_03_Diagnostic-test-evaluation-with-imperfect-reference-test.vrb)
-Overfull \vbox (49.00964pt too high) detected at line 842
+Overfull \vbox (49.00964pt too high) detected at line 538
  []
 
 [18
@@ -1820,13 +1516,13 @@ n be assumed to be independent[]
  []
 
 
-Overfull \hbox (164.10628pt too wide) in paragraph at lines 101--101
-[]\T1/lmtt/m/n/10.95 "Tally_RR" <- structure(c(23, 2, 1, 2, 12, 3, 3, 10, 6, 3,
- 5, 30), .Dim = c(4, 3))[] 
+Overfull \hbox (169.85501pt too wide) in paragraph at lines 101--101
+[]\T1/lmtt/m/n/10.95 "Tally_RR" <- structure(c(31, 2, 0, 1, 21, 0, 2, 12, 6, 11
+, 0, 14), .Dim = c(4, 3))[] 
  []
 
 )
-Overfull \vbox (1285.75473pt too high) detected at line 1008
+Overfull \vbox (1285.75473pt too high) detected at line 705
  []
 
 [22
@@ -1858,11 +1554,11 @@ perfect-reference-test.out' has not changed.
 (rerunfilecheck)             Checksum: B9A2BC73FD62B0955E1E8F7558BBC379;593.
  ) 
 Here is how much of TeX's memory you used:
- 24888 strings out of 480502
- 494083 string characters out of 5897829
- 812284 words of memory out of 5000000
- 41921 multiletter control sequences out of 15000+600000
- 453465 words of font info for 63 fonts, out of 8000000 for 9000
+ 24869 strings out of 480559
+ 493023 string characters out of 5901612
+ 784587 words of memory out of 5000000
+ 41846 multiletter control sequences out of 15000+600000
+ 462839 words of font info for 70 fonts, out of 8000000 for 9000
  14 hyphenation exceptions out of 8191
  101i,13n,113p,1867b,751s stack positions out of 5000i,500n,10000p,200000b,80000s
 {c:/Users/E619545/AppData/Roaming/TinyTeX/texmf-dist/fonts/enc/dvips/lm/lm-ec
@@ -1875,10 +1571,10 @@ dist/fonts/type1/public/lm/lmtk10.pfb><c:/Users/E619545/AppData/Roaming/TinyTeX
 /texmf-dist/fonts/type1/public/lm/lmtt10.pfb><c:/Users/E619545/AppData/Roaming/
 TinyTeX/texmf-dist/fonts/type1/public/lm/lmtti10.pfb>
 Output written on Slides_03_Diagnostic-test-evaluation-with-imperfect-reference
--test.pdf (24 pages, 175456 bytes).
+-test.pdf (24 pages, 172202 bytes).
 PDF statistics:
- 219 PDF objects out of 1000 (max. 8388607)
- 172 compressed objects within 2 object streams
+ 222 PDF objects out of 1000 (max. 8388607)
+ 174 compressed objects within 2 object streams
  66 named destinations out of 1000 (max. 500000)
  59 words of extra memory for PDF output out of 10000 (max. 10000000)
 

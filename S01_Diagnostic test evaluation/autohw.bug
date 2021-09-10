@@ -1,4 +1,4 @@
-## Auto-generated Hui-Walter model created by script version 0.1 on 2021-08-19
+## Auto-generated Hui-Walter model created by script version 0.1 on 2021-09-10
 
 model{
 
@@ -92,7 +92,7 @@ inits{
 ## Data:
 data{
 "Populations" <- 3
-"N_RR" <- c(28, 28, 44)
-"Tally_RR" <- structure(c(23, 2, 1, 2, 12, 3, 3, 10, 6, 3, 5, 30), .Dim = c(4, 3))
+"N_RR" <- c(34, 35, 31)
+"Tally_RR" <- structure(c(31, 2, 0, 1, 21, 0, 2, 12, 6, 11, 0, 14), .Dim = c(4, 3))
 }
 

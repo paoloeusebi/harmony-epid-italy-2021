@@ -13,7 +13,7 @@ output:
 ---
 
 ```{r setup, include=TRUE, message=FALSE, warning = FALSE, echo=FALSE, render=FALSE}
-knitr::opts_chunk$set(echo = TRUE)
+knitr::opts_chunk$set(echo = T)
 library(tidyverse)
 library(kableExtra)
 library(runjags)
@@ -61,7 +61,25 @@ df <- tibble("  "  = c("T1+", "T1-"),
 df %>% kable()
 ```
 
+- 5 parameters: Se1, Se2, Sp1, Sp2, p
+
+
+## Hui-Walter Model: 2 tests, 1 population
+
+- We don't know the disease status >> Marginalize over D+ and D-
+
+```{r, echo=F}
+df <- tibble("  "  = c("T1+", "T1-"),
+             "T2+" = c("p*Se1*Se2+p*Sp1*Sp2", "p*(1-Se1)*Se2+p*(1-Sp1)*Sp2"),
+             "T2-" = c("p*Se1*(1-Se2)+p*Sp1*(1-Sp2)", "p*(1-Se1)*(1-Se2)+p*(1-Sp1)*(1-Sp2)"))
+df %>% kable()
+```
+
 - 5 parameters and 3 equations >> Non-identifiable model!
+
+- We can't fit this model with standard likelihood procedures.
+
+- Let's try do go Bayesian!
 
 
 ## Model Specification
@@ -144,7 +162,7 @@ knitr::kable(res)
 
 - Convergence is more problematic than usual
 
-- Be **very** careful with the order of combinations in dmultinom!
+- Be very careful with the order of combinations in dmultinom!
 
 - Check your results carefully to ensure they make sense!
 
@@ -183,8 +201,10 @@ se1 <- 0.9; sp1 <- 0.95
 se2 <- 0.8; sp2 <- 0.99
 prevalence <- 0.5; N <- 100
 truestatus <- rbinom(N, 1, prevalence)
-Test1 <- rbinom(N, 1, (truestatus * se1) + ((1-truestatus) * (1-sp1)))
-Test2 <- rbinom(N, 1, (truestatus * se2) + ((1-truestatus) * (1-sp2)))
+Test1 <- rbinom(N, 1, (truestatus * se1) + 
+                  ((1-truestatus) * (1-sp1)))
+Test2 <- rbinom(N, 1, (truestatus * se2) + 
+                  ((1-truestatus) * (1-sp2)))
 t <- table(Test1, Test2)
 y <- as.numeric(t)
 ```
@@ -193,132 +213,37 @@ Can we recover these parameter values?
   
 ## Exercise
   
-Modify the code in the Hui Walter model to force tests to be no worse than useless
+- Modify the code in the Hui-Walter model to force tests to be no worse than useless
 
-Simulate data and recover parameters for:
-  
-- N=10
-- N=100
-- N=1000
-
-
-
-## Solution
-
-Model definition:
-  
-```{r include=FALSE}
-hw_2t_1p_priors <- "model{
-  y ~ dmulti(prob, TotalTests)
-  
-  # Test1- Test2-
-	prob[1] <- (p * ((1-se[1])*(1-se[2]))) + ((1-p) * ((sp[1])*(sp[2])))
-  # Test1+ Test2-
-	prob[2] <- (p * ((se[1])*(1-se[2]))) + ((1-p) * ((1-sp[1])*(sp[2])))
-  # Test1- Test2+
-	prob[3] <- (p * ((1-se[1])*(se[2]))) + ((1-p) * ((sp[1])*(1-sp[2])))
-  # Test1+ Test2+
-	prob[4] <- (p * ((se[1])*(se[2]))) + ((1-p) * ((1-sp[1])*(1-sp[2])))
- 
-  p ~ dbeta(1, 1)
-  se[1] ~ dbeta(HPSe[1,1], HPSe[1,2])T(1-sp[1], )
-  sp[1] ~ dbeta(HPSp[1,1], HPSp[1,2])
-  se[2] ~ dbeta(HPSe[2,1], HPSe[2,2])T(1-sp[2], )
-  sp[2] ~ dbeta(HPSp[2,1], HPSp[2,2])
-  #data# y, TotalTests, HPSe, HPSp
-  #monitor# p, prob, se, sp
-  #inits# p, se, sp
-}
-"
-cat(hw_2t_1p_priors, file='hw_2t_1p_priors.bug')
-```
-
-```{r comment='', echo=FALSE}
-cat(hw_2t_1p_priors, sep='\n')
-```
-
-Note that we specify the prior hyperparameters as data so we can change these from R without havíng to edit the model file (this is optional!)
-
-```{r}
-se1 <- 0.9
-sp1 <- 0.95
-se2 <- 0.8
-sp2 <- 0.99
-prevalence <- 0.5
-# Change N to be 10, 100 or 1000:
-N <- 100
-truestatus <- rbinom(N, 1, prevalence)
-Test1 <- rbinom(N, 1, (truestatus * se1) + ((1-truestatus) * (1-sp1)))
-Test2 <- rbinom(N, 1, (truestatus * se2) + ((1-truestatus) * (1-sp2)))
-twoXtwo <- table(Test1, Test2)
-twoXtwo
-
-y <- as.numeric(twoXtwo)
-TotalTests <- sum(y)
-HPSe <- matrix(c(1,1,1,1), nrow=2, ncol=2)
-HPSp <- matrix(c(1,1,1,1), nrow=2, ncol=2)
-p <- list(chain1=0.05, chain2=0.95)
-se <- list(chain1=c(0.5,0.99), chain2=c(0.99,0.5))
-sp <- list(chain1=c(0.5,0.99), chain2=c(0.99,0.5))
-results <- run.jags(hw_2t_1p_priors, n.chains=2)
-results
-```
-
-How well do we recover our parameters?
-  
-```{r}
-se1
-se2
-sp1
-sp2
-```
-
-Not that well!
-
-
-## Optional Exercise
-
-Compare results with the following priors for test 1:
-  
-- Sensitivity = 0.9 (95% CI: 0.85 - 0.95)
-- Specificity = 0.95 (95%CI: 0.92-0.97)
-
-[These are the same as in session 1]
-
-
-## Optional Solution
-
-```{r}
-HPSe[1,] <- c(148.43, 16.49)
-HPSp[1,] <- c(240.03, 12.63)
-HPSe
-HPSp
-results <- run.jags(hw_2t_1p_priors, n.chains=2)
-results
-```
-
-How well do we recover our parameters for test 2?
-  
-```{r}
-se1
-se2
-sp1
-sp2
-```
-
-A bit better!  But note that the credible interval for test 1 is not much narrower than that of the prior:
-  
-```{r}
-# Sensitivity:
-qbeta(c(0.025, 0.5, 0.975), 148.43, 16.49)
-# Specificity:
-qbeta(c(0.025, 0.5, 0.975), 240.03, 12.63)
-```
-
-So we have not gained any additional information about test 1.
+- Simulate data and recover parameters for N=10, 100 or 10000
 
 
 # Hui-Walter models for 2 tests and N populations
+
+## Hui-Walter : 2 tests, 2 pops
+
+- Population 1
+
+\scriptsize
+```{r, echo=F}
+df <- tibble("  "  = c("T1+", "T1-"),
+             "T2+" = c("p1*Se1*Se2+p1*Sp1*Sp2", "p1*(1-Se1)*Se2+p1*(1-Sp1)*Sp2"),
+             "T2-" = c("p1*Se1*(1-Se2)+p1*Sp1*(1-Sp2)", "p1*(1-Se1)*(1-Se2)+p1*(1-Sp1)*(1-Sp2)"))
+df %>% kable()
+```
+
+- Population 2
+```{r, echo=F}
+df <- tibble("  "  = c("T1+", "T1-"),
+             "T2+" = c("p2*Se1*Se2 + p2*Sp1*Sp2", "p2*(1-Se1)*Se2+p2*(1-Sp1)*Sp2"),
+             "T2-" = c("p2*Se1*(1-Se2)+p2*Sp1*(1-Sp2)", "p2*(1-Se1)*(1-Se2)+p2*(1-Sp1)*(1-Sp2)"))
+df %>% kable()
+```
+\normalsize
+
+- 6 parameters and 6 equations >> Identifiable model!
+
+
 
 ## Hui-Walter models with multiple populations
 
@@ -387,7 +312,8 @@ There is a function (provided in the GitHub repo) that can do this for us:
 ```{r, results='hide'}
 simdata$Population <- factor(simdata$Population, levels=seq_along(prevalences), labels=paste0('Pop_', seq_along(prevalences)))
 source("autohuiwalter.R")
-auto_huiwalter(simdata[,c('Population','Test1','Test2')], outfile='autohw.bug')
+auto_huiwalter(simdata[,c('Population','Test1','Test2')],
+               outfile='autohw.bug')
 ```
 
 ---
