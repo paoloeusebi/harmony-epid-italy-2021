@@ -1,3 +1,4 @@
+# load/test packages
 library(runjags)
 library(rjags)
 testjags()
@@ -46,6 +47,7 @@ hw_2t_1p <- c("model{
 # sp <- list(chain1=c(0.5,0.99), chain2=c(0.99,0.5))
 
 # initial values for 2 chains
+# used in the following runs
 inits1 = list(".RNG.name" ="base::Mersenne-Twister", ".RNG.seed" = 100022)
 inits2 = list(".RNG.name" ="base::Mersenne-Twister", ".RNG.seed" = 300022)
 
@@ -59,15 +61,17 @@ results <- run.jags(hw_2t_1p,
 print(results)
 
 plot(results,
-     vars = list("se", "sp", "p"),
-     layout = c(3, 3),
-     plot.type = c("trace", "histogram", "autocorr"))
+     vars = list("se", "sp","p"),
+     layout = c(5,4),
+     plot.type = c("trace", "histogram", "autocorr", "ecdf"))
+
 
 # Analysing simulated data is useful to check if
 # we can recover parameter values.
 se1 <- 0.9; sp1 <- 0.95
 se2 <- 0.8; sp2 <- 0.99
-prevalence <- 0.9; n <- 1000
+prevalence <- 0.9
+n <- 1000
 truestatus <- rbinom(n, 1, prevalence)
 Test1 <- rbinom(n, 1, (truestatus * se1) + ((1-truestatus) * (1-sp1)))
 Test2 <- rbinom(n, 1, (truestatus * se2) + ((1-truestatus) * (1-sp2)))
@@ -81,6 +85,10 @@ results <- run.jags(hw_2t_1p,
                     burnin = 5000,
                     sample = 15000)
 print(results)
+plot(results,
+     vars = list("se", "sp","p"),
+     layout = c(5, 4),
+     plot.type = c("trace", "histogram", "autocorr", "ecdf"))
 
 # How well do we recover our parameters?
 
@@ -109,14 +117,15 @@ hw_2t_1p_priors <- "model{
 }
 "
 
-# Note that we specify the prior hyperparameters as data so we can change these from R without havíng to edit the model file (this is optional!)
+# Note that we specify the prior hyperparameters as data so we can change these
+# from R without havíng to edit the model file (optional!)
 
 # Simulate again
 se1 <- 0.9; sp1 <- 0.95
 se2 <- 0.8; sp2 <- 0.99
 prevalence <- 0.5
 # Change N to be 10, 100 or 1000:
-n <- 1000
+n <- 100000
 truestatus <- rbinom(n, 1, prevalence)
 Test1 <- rbinom(n, 1, (truestatus * se1) + ((1-truestatus) * (1-sp1)))
 Test2 <- rbinom(n, 1, (truestatus * se2) + ((1-truestatus) * (1-sp2)))
@@ -124,19 +133,23 @@ t <- table(Test1, Test2); t
 y <- as.numeric(t); y
 n <- sum(y); n
 
-HPSe <- matrix(c(1,1,1,1), nrow=2, ncol=2)
-HPSp <- matrix(c(1,1,1,1), nrow=2, ncol=2)
+HPSe <- matrix(c(1,1,1,1), nrow=2, ncol=2); HPSe
+HPSp <- matrix(c(1,1,1,1), nrow=2, ncol=2); HPSp
 
-# Initial values for two chains
-p <- list(chain1=0.05, chain2=0.95)
-se <- list(chain1=c(0.5,0.99), chain2=c(0.99,0.5))
-sp <- list(chain1=c(0.5,0.99), chain2=c(0.99,0.5))
+# choice of initial values (uncomment below if you want to try)
+# p <- list(chain1=0.05, chain2=0.95)
+# se <- list(chain1=c(0.5,0.99), chain2=c(0.99,0.5))
+# sp <- list(chain1=c(0.5,0.99), chain2=c(0.99,0.5))
 results <- run.jags(hw_2t_1p_priors,
                     n.chains=2,
+                    inits=list(inits1, inits2),
                     burnin = 5000,
                     sample = 10000)
-results
-
+print(results)
+plot(results,
+     vars = list("se", "sp","p"),
+     layout = c(5, 4),
+     plot.type = c("trace", "histogram", "autocorr", "ecdf"))
 # How well do we recover our parameters?
 
 # H-W Model: 2 tests, m pops
@@ -169,7 +182,7 @@ hw_2t_mpops <- c("model{
   sp[2] ~ dbeta(1, 1)
 
   #data# m, n, y
-  #inits#
+  #inits# pi, se, sp
   #monitor# se, sp, pi
 }
 ")
@@ -202,16 +215,17 @@ y
 m = 2 # number of populations
 n = apply(y, 1, sum); n
 
-# initial values for two chains
-inits1 = list(".RNG.name" ="base::Mersenne-Twister", ".RNG.seed" = 100022)
-inits2 = list(".RNG.name" ="base::Mersenne-Twister", ".RNG.seed" = 300022)
+# choice of initial values (uncomment below if you want to try)
+# pi <- list(chain1=c(0.05, 0.5), chain2=c(0.05, 0.5))
+# se <- list(chain1=c(0.5,0.99), chain2=c(0.99,0.5))
+# sp <- list(chain1=c(0.5,0.99), chain2=c(0.99,0.5))
+
 
 results <- run.jags(hw_2t_mpops,
                     n.chains=2,
-                    inits = list(inits1, inits2),
                     burnin = 10000,
                     sample = 100000)
-results
+print(results)
 plot(results,
      vars = list("se", "sp", "pi"),
      layout = c(3, 6),
