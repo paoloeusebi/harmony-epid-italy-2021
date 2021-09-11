@@ -18,7 +18,7 @@ output:
 
 ```{r setup, message=F, warning=F, render=F, echo=F}
 if(params$presentation) options(width=60)
-knitr::opts_chunk$set(echo = TRUE)
+knitr::opts_chunk$set(echo = T)
 library(tidyverse)
 library(kableExtra)
 library(mada)
@@ -63,7 +63,7 @@ d %>%
 
 - Forest plot of sensitivity
 
-```{r, echo=F, fig.height=5}
+```{r, echo=F, fig.width=7, fig.height=5, warning=F}
 forest(madad(d),
        snames=d$Study,
        type = "sens",
@@ -75,7 +75,7 @@ forest(madad(d),
 
 - Forest plot of specificity
 
-```{r, echo=F, fig.height=5}
+```{r, echo=F, fig.width=7, fig.height=5, warning=F}
 forest(madad(d),
        snames=d$Study,
        type = "spec",
@@ -105,14 +105,14 @@ Two main frameworks:
 ## DTA-MA: bivariate analysis of sensitivity and specificity
 
 
-![Alt text](img/bivariate.png)
+![Alt text](img/bivariate.png){width=90%}
 
 ---
 
 
 ## DTA-MA: hierarchical summary ROC (HSROC)
 
-![Alt text](img/hsroc.png)
+![Alt text](img/hsroc.png){width=90%}
 
 
 ## DTA-MA: bivariate analysis of sensitivity and specificity
