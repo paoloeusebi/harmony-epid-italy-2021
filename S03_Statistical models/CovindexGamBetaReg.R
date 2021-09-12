@@ -18,35 +18,48 @@ load_install_package("data.table")
 
 covindex <- function(x) x/data.table::shift(x, n = 7)
 
-covindex_gam_betareg <- function(y, t, x = NULL, wts = NULL, k = 3:51)
+covindex_gam_betareg <- function(y, t = NULL, 
+                                 x = NULL, wts = NULL, 
+                                 k = 3:51, bs = "tp",
+                                 criterion = c("AIC", "BIC"))
 {
 # Beta GAM model for covindex
-# y = a vector of daily positives
-# t = a vector of times
-# x = a data.frame of named covariates
+# y = a vector of daily test positive rate values
+# t = a vector of times 
+# x = a data.frame of named further covariates
 # wts = a vector of swabs to be used as weights
 # k = a vector of integers to search for the optimal dimension of the 
 #     spline basis used to represent the smooth term
 
   y <- as.vector(y)
+  n <- length(y)
+  if(is.null(t)) t <- seq.int(1,n)
   t <- as.vector(t)
+  stopifnot(length(t) == n)
   if(!is.null(x)) 
     x <- as.data.frame(x)
   k <- as.integer(k)
-  n <- length(y)
-  stopifnot(length(t) == n)
   if(is.null(wts)) wts <- rep(1, n)
+  if(any(y == 0 | y == 1, na.rm = TRUE))  
+  { # if needed apply transformation for boundary correction
+    y <- (y*(n-1) + 0.5)/n  
+  }
   data <- data.frame(y, t, wts)
   if(!is.null(x)) 
     data <- cbind(data, x)
   
-  AIC <- BIC <- rep(NA, length(k))
+  # model selection
+  criterion <- match.arg(criterion, choices = c("AIC", "BIC"))
+  crit <- matrix(as.double(NA), nrow = length(k), ncol = 2, 
+                 dimnames = list(NULL, c("AIC", "BIC")))
   if(length(k) > 1)
   {
-    # select smoothing by AIC (or BIC)
+    # select smoothing by criterion (AIC or BIC)
     for(i in seq(k))
     {
-      fmla <- as.formula(paste0("y ~ ", paste0("s(t, k = ", k[i], ")")))
+      fmla <- as.formula(paste0("y ~ ", 
+                                paste0("s(t, k = ", k[i], 
+                                       " , bs = '", bs, "')")))
       if(!is.null(x)) 
          fmla <- update(fmla, paste("~ . +", colnames(x), collapse = " + "))
       mod <- gam(fmla, 
@@ -54,19 +67,20 @@ covindex_gam_betareg <- function(y, t, x = NULL, wts = NULL, k = 3:51)
                  family = betar(link="logit"), 
                  weights = wts,
                  method = "REML")
-      AIC[i] <- AIC(mod)
-      BIC[i] <- BIC(mod)
+      crit[i,] <- c(AIC(mod), BIC(mod))
     }
-    k_AIC_opt <- k[which.min(AIC)]
-    k_BIC_opt <- k[which.min(BIC)]
+    k_opt <- if(criterion == "AIC") k[which.min(crit[,1])] 
+             else                   k[which.min(crit[,2])] 
+    names(k_opt) <- criterion
   } else
   {
-    k_AIC_opt <- k_BIC_opt <- k
+    k_opt <- k
   }
   
   # fit best model
-  
-  fmla <- as.formula(paste0("y ~ ", paste0("s(t, k = ", k_AIC_opt, ")")))
+  fmla <- as.formula(paste0("y ~ ", 
+                            paste0("s(t, k = ", k_opt, 
+                                   " , bs = '", bs, "')")))
   if(!is.null(x)) 
     fmla <- update(fmla, paste("~ . +", colnames(x), collapse = " + "))
   mod <- gam(fmla, 
@@ -75,11 +89,9 @@ covindex_gam_betareg <- function(y, t, x = NULL, wts = NULL, k = 3:51)
              weights = wts,
              method = "REML")
   mod$k <- k
-  mod$AIC <- AIC
-  mod$k_AIC_opt <- k_AIC_opt
-  mod$BIC <- BIC
-  mod$k_BIC_opt <- k_BIC_opt
-  
+  mod$AIC <- crit[,1]
+  mod$BIC <- crit[,2]
+  mod$k_opt <- k_opt 
   class(mod) <- c("covindex_gam_betareg", class(mod))
   return(mod)
 }

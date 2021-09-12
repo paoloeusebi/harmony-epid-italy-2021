@@ -227,14 +227,19 @@ growthGLM <- function(di, ti,  X, family = "Poisson",
   diffqtU <- diffqtCurves[2,]
   diffqtL <- diffqtCurves[1,]
   
-  return(list(pars=pars, optim=propPars[[best]],
-              linPredDiff=linPredDiff, linPredCum=linPredCum,
-              hessian=hess, asyVar=invFish, se=se,
+  return(list(pars=pars, 
+              optim = propPars[[best]],
+              linPredDiff = linPredDiff[,1], 
+              linPredCum = linPredCum,
+              hessian = hess, 
+              asyVar = invFish, 
+              se = se,
               rpars=rpars, 
-              lowdiff=diffqtL, updiff=diffqtU, lowcum=qtL, upcum=qtU, 
-              lik=-propPars$value[best], 
-              R2diff=cor(di, linPredDiff[1:length(ti)])^2,
-              R2cum=cor(cumsum(di), linPredCum[1:length(ti)])^2,
+              lowdiff = diffqtL, updiff = diffqtU, 
+              lowcum = qtL, upcum = qtU, 
+              loglik = -propPars$value[best], 
+              R2diff = cor(di, linPredDiff[1:length(ti)])^2,
+              R2cum = cor(cumsum(di), linPredCum[1:length(ti)])^2,
               NoConv=(!PD)))
 }
 

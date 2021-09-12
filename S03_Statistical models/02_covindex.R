@@ -50,11 +50,11 @@ mod = covindex_gam_betareg(
 summary(mod)
 
 # plot smoothing parameter selection
-df = data.frame(k = mod$k, AIC = mod$AIC)
-ggplot(df, aes(x = k, y = AIC)) +
+dt = data.table(k = mod$k, AIC = mod$AIC)
+ggplot(dt, aes(x = k, y = AIC)) +
   geom_point() +
   geom_line() +
-  geom_vline(xintercept = mod$k_AIC_opt, lty = 2) +
+  geom_vline(xintercept = mod$k_opt, lty = 2) +
   theme_minimal()
 
 # check autocorrelation of residuals

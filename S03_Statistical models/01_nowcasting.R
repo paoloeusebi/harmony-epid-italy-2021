@@ -38,10 +38,10 @@ mod = growthGLM(di = dati$y,                  # response variable
                 alpha = 0.05)                 # confidence level for predictions
 str(mod)
 
-mod$pars   # MLEs
-mod$lik    # log-likelihood at MLEs
-mod$R2diff # pseudo-Rsquared for first differences counts
-mod$R2cum  # pseudo-Rsquared for cumulative counts
+mod$pars    # MLEs
+mod$loglik  # log-likelihood at MLEs
+mod$R2diff  # pseudo-Rsquared for first differences counts
+mod$R2cum   # pseudo-Rsquared for cumulative counts
 
 # table of parameters
 tab = data.frame("Parameters" = mod$pars, "SE" = mod$se)
@@ -65,8 +65,7 @@ peak
 dati$date[peak]
 
 
-
-df = data.frame(date = c(dati$date, max(dati$date)+1:14),
+dt = data.table(date = c(dati$date, max(dati$date)+1:14),
                 y = c(dati$y, rep(NA, 14)), 
                 Y = c(cumsum(dati$y), rep(NA,14)),
                 yfit = mod$linPredDiff,
@@ -76,16 +75,16 @@ df = data.frame(date = c(dati$date, max(dati$date)+1:14),
                 Ylow = mod$lowcum,
                 Yup = mod$upcum)
 
-ggplot(df, aes(x = date, y = y)) +
+ggplot(dt, aes(x = date, y = y)) +
   geom_point(size = 1) +
   geom_line(aes(y = yfit), col = "firebrick") +
   geom_ribbon(aes(ymin = ylow, ymax = yup), 
               fill = "firebrick", alpha = 0.3) +  
-  geom_vline(xintercept = dati$date[peak,], lty = 2) +
+  geom_vline(xintercept = dati$date[peak], lty = 2) +
   labs(x = NULL, y = "New positives") +
   theme_minimal()
 
-ggplot(df, aes(x = date, y = Y)) +
+ggplot(dt, aes(x = date, y = Y)) +
   geom_point(size = 1) +
   geom_line(aes(y = Yfit), col = "firebrick") +
   geom_ribbon(aes(ymin = Ylow, ymax = Yup), 
@@ -122,12 +121,13 @@ mod = growthGLM(di = dati$y,  # response variable
                 family = "Negative Binomial",       # distribution
                 tPred = max(dati$t)+14,  # prediction time horizon
                 alpha = 0.05)            # confidence level for predictions
+# please be patient...
 str(mod)
 
-mod$pars   # MLEs
-mod$lik    # log-likelihood at MLEs
-mod$R2diff # pseudo-Rsquared for first differences counts
-mod$R2cum  # pseudo-Rsquared for cumulative counts
+mod$pars    # MLEs
+mod$loglik  # log-likelihood at MLEs
+mod$R2diff  # pseudo-Rsquared for first differences counts
+mod$R2cum   # pseudo-Rsquared for cumulative counts
 
 # table of parameters
 tab = data.frame("Parameters" = mod$pars, "SE" = mod$se)
@@ -150,7 +150,7 @@ peak <- floor(mod$pars[2] + log10(mod$pars[3])/exp(mod$pars[1]))
 peak
 dati$date[peak]
 
-df = data.frame(date = c(dati$date, max(dati$date)+1:14),
+dt = data.table(date = c(dati$date, max(dati$date)+1:14),
                 y = c(dati$y, rep(NA, 14)), 
                 Y = c(cumsum(dati$y), rep(NA,14)),
                 yfit = mod$linPredDiff,
@@ -160,7 +160,7 @@ df = data.frame(date = c(dati$date, max(dati$date)+1:14),
                 Ylow = mod$lowcum,
                 Yup = mod$upcum)
 
-ggplot(df, aes(x = date, y = y)) +
+ggplot(dt, aes(x = date, y = y)) +
   geom_point(size = 1) +
   geom_line(size = 0.1) +
   geom_line(aes(y = yfit), col = "firebrick") +
@@ -170,7 +170,7 @@ ggplot(df, aes(x = date, y = y)) +
   labs(x = NULL, y = "New deceased") +
   theme_minimal()
 
-ggplot(df, aes(x = date, y = Y)) +
+ggplot(dt, aes(x = date, y = Y)) +
   geom_point(size = 1) +
   geom_line(aes(y = Yfit), col = "firebrick") +
   geom_ribbon(aes(ymin = Ylow, ymax = Yup),
