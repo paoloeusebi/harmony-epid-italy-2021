@@ -20,6 +20,17 @@ Credits: Matt Denwood, Polychronis Kostoulas
 - kableExtra
 - mada
 - readxl
+- ggplot2
+- scales
+- mgcv
+- data.table
+- BB
+- optimr
+- GA
+- nplr
+- mvtnorm
+- corpcor
+- Matrix
 
 ## Session info
 R version 4.0.2
