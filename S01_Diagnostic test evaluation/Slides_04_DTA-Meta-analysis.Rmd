@@ -134,10 +134,21 @@ $\mu_{B_i}$ is the logit-transformed specificity in study $i$
 
 ---
 
+## DTA-MA: hierarchical summary ROC (HSROC)
+Some notation/definitions (no covariates)
+
+- The model is defined in terms of the probability $\pi_{ij}$ that a patient in study $i$ with a disease status $j$ has a positive test result. 
+
+- $j=0$ for a patient without the disease
+
+- $j=1$ for a patient with the disease
+
+- $\pi_{i0}=0$ is the false-positive rate (1-specificity)
+
+- $\pi_{i1}=0$ is the true-positive rate (sensitivity)
+
 
 ## DTA-MA: hierarchical summary ROC (HSROC)
-
-Some notation/definitions (no covariates)
 
 - level I (within study)
 
@@ -151,7 +162,7 @@ $\alpha_i \sim N(\Lambda, \sigma^2_\alpha)$
 
 $\theta_i$ are cutpoint parameters (or positivity criteria)
 
-$\alpha_i$ are accuracy parameters
+$\alpha_i$ are accuracy parameters, modeling the difference between true-positive and false-positive fractions
 
 $\beta$ is a shape parameter, allowing true-positive and false-positive fractions to increase at different rates as $\theta_i$ increases
 
@@ -198,6 +209,8 @@ legend("bottomright",
 - Where is the summary measure of heterogeneity?
 
 - There is $I^2$ for DTA-MA?
+
+- Interpretation of confidence region/prediction region
 
 ---
 
