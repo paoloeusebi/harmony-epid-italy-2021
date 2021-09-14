@@ -146,6 +146,7 @@ inits3 = list(".RNG.name" ="base::Mersenne-Twister", ".RNG.seed" = 500022)
 
 results <- run.jags(dta_ma_imp,
                     n.chains = 3,
+                    inits = list(inits1, inits2, inits3),
                     burnin = 5000,
                     sample = 10000)
 
