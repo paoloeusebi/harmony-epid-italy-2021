@@ -19,14 +19,15 @@ t
 hw_2t_1p <- c("model{
   y ~ dmulti(prob, n)
 
-  # Test1- Test2-
-	prob[1] <- (p*((1-se[1])*(1-se[2]))) + ((1-p)*((sp[1])*(sp[2])))
+# Test1- Test2-
+	prob[1] <- (p * ((1-se[1])*(1-se[2]))) + ((1-p) * ((sp[1])*(sp[2])))
   # Test1+ Test2-
-	prob[2] <- (p*((se[1])*(1-se[2]))) + ((1-p)*((1-sp[1])*(sp[2])))
+	prob[2] <- (p * ((se[1])*(1-se[2]))) + ((1-p) * ((1-sp[1])*(sp[2])))
   # Test1- Test2+
-	prob[3] <- (p*((1-se[1])*(se[2]))) + ((1-p)*((sp[1])*(1-sp[2])))
-	# Test1+ Test2+
-	prob[4] <- (p*((se[1])*(se[2]))) + ((1-p)*((1-sp[1])*(1-sp[2])))
+	prob[3] <- (p * ((1-se[1])*(se[2]))) + ((1-p) * ((sp[1])*(1-sp[2])))
+", "
+  # Test1+ Test2+
+	prob[4] <- (p * ((se[1])*(se[2]))) + ((1-p) * ((1-sp[1])*(1-sp[2])))
 
 	", "
 
@@ -41,16 +42,10 @@ hw_2t_1p <- c("model{
 }
 ")
 
-# choice of initial values (uncomment below if you want to try)
-# p <- list(chain1=0.05, chain2=0.95)
-# se <- list(chain1=c(0.5,0.99), chain2=c(0.99,0.5))
-# sp <- list(chain1=c(0.5,0.99), chain2=c(0.99,0.5))
-
-# initial values for 2 chains
-# used in the following runs
-inits1 = list(".RNG.name" ="base::Mersenne-Twister", ".RNG.seed" = 100022)
-inits2 = list(".RNG.name" ="base::Mersenne-Twister", ".RNG.seed" = 300022)
-
+# choice of initial values
+p <- list(chain1=0.05, chain2=0.95)
+se <- list(chain1=c(0.5,0.99), chain2=c(0.99,0.5))
+sp <- list(chain1=c(0.5,0.99), chain2=c(0.99,0.5))
 
 # run
 results <- run.jags(hw_2t_1p,
@@ -81,7 +76,6 @@ n <- sum(y); n
 
 results <- run.jags(hw_2t_1p,
                     n.chains =2,
-                    inits = list(inits1, inits2),
                     burnin = 5000,
                     sample = 15000)
 print(results)
@@ -136,13 +130,12 @@ n <- sum(y); n
 HPSe <- matrix(c(1,1,1,1), nrow=2, ncol=2); HPSe
 HPSp <- matrix(c(1,1,1,1), nrow=2, ncol=2); HPSp
 
-# choice of initial values (uncomment below if you want to try)
-# p <- list(chain1=0.05, chain2=0.95)
-# se <- list(chain1=c(0.5,0.99), chain2=c(0.99,0.5))
-# sp <- list(chain1=c(0.5,0.99), chain2=c(0.99,0.5))
+# choice of initial values
+p <- list(chain1=0.05, chain2=0.95)
+se <- list(chain1=c(0.5,0.99), chain2=c(0.99,0.5))
+sp <- list(chain1=c(0.5,0.99), chain2=c(0.99,0.5))
 results <- run.jags(hw_2t_1p_priors,
                     n.chains=2,
-                    inits=list(inits1, inits2),
                     burnin = 5000,
                     sample = 10000)
 print(results)
@@ -187,7 +180,7 @@ hw_2t_mpops <- c("model{
 }
 ")
 
-# Simulate two pops
+# Simulate two populations
 se1 <- 0.9; sp1 <- 0.95 # Test 1
 se2 <- 0.8; sp2 <- 0.99 # Test 2
 pr1 <- 0.25; pr2 <- 0.5 # prevalences
@@ -216,9 +209,9 @@ m = 2 # number of populations
 n = apply(y, 1, sum); n
 
 # choice of initial values (uncomment below if you want to try)
-# pi <- list(chain1=c(0.05, 0.5), chain2=c(0.05, 0.5))
-# se <- list(chain1=c(0.5,0.99), chain2=c(0.99,0.5))
-# sp <- list(chain1=c(0.5,0.99), chain2=c(0.99,0.5))
+pi <- list(chain1=c(0.05, 0.5), chain2=c(0.05, 0.5))
+se <- list(chain1=c(0.5, 0.99), chain2=c(0.99,0.5))
+sp <- list(chain1=c(0.5, 0.99), chain2=c(0.99,0.5))
 
 
 results <- run.jags(hw_2t_mpops,
