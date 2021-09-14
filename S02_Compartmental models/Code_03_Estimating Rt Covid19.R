@@ -1,5 +1,5 @@
-library(EpiEstim)
 library(tidyverse)
+library(EpiEstim)
 
 # data munging ------------------------------------------------------------
 wd <- read.csv("https://raw.githubusercontent.com/CSSEGISandData/COVID-19/master/csse_covid_19_data/csse_covid_19_time_series/time_series_covid19_confirmed_global.csv")
@@ -19,7 +19,7 @@ wd_long <- wd1 %>%
   ungroup()
 
 ita_long <- wd_long %>%
-  filter(Country.Region=="Italy") %>%
+  filter(Country.Region=="Italy") %>% # change Country.Region value for another country
   select(date, cases, ncases) %>%
   mutate(ncases=ifelse(ncases<0, 0, ncases)) %>%
   filter(date>"2020-01-22")# to correct negative cases in 2020-06-19
@@ -51,3 +51,5 @@ res_parametric_si <- estimate_R(ita_long2$ncases,
 head(res_parametric_si$R)
 plot(res_parametric_si, "R")
 plot(res_parametric_si, legend = FALSE)
+
+# play with other options of EpiEstim
