@@ -143,6 +143,7 @@ plot(results,
      vars = list("se", "sp","p"),
      layout = c(5, 4),
      plot.type = c("trace", "histogram", "autocorr", "ecdf"))
+
 # How well do we recover our parameters?
 
 # H-W Model: 2 tests, m pops

@@ -18,6 +18,23 @@ library(tidyverse)
 library(runjags)
 library(rjags)
 ```
+# Introduction
+
+
+## Harmony
+https://harmony-net.eu/
+
+![Harmony logo](img/harmony.png){width=90%}
+
+
+## Reproducibility
+![Baker Nature 2016](img/reproducibility.png){width=70%}
+
+
+## Reproducibility
+![Snapshot of the GitHub Repo](img/githubrep.png)
+
+
 # Introduction to Bayesian Statistics
 
 ## Bayes Rule
@@ -75,13 +92,13 @@ We assume an uninformative prior.
  - Likelihood $Y|p \sim Bin(p, 12)$
  
  - Posterior $p|y \sim Beta(\alpha=11, \beta=3)$
-
+ 
 
 ## Analytical derivation
 
 - Uniform \textcolor{blue}{Prior $Beta(1,1)$}
 
-- \textcolor{red}{Likelihood $Bin(10,12)$}
+- \textcolor{red}{Likelihood $Bin(p, 12)$}
 
 - \textcolor{green}{Posterior $Beta(11, 3)$}
 
@@ -100,7 +117,7 @@ ggplot(d) +
 
 - If I change the \textcolor{blue}{Prior} to \textcolor{blue}{$Beta(10, 10)$}
 
-- \textcolor{red}{Likelihood $Bin(10, 12)$}
+- \textcolor{red}{Likelihood $Bin(p, 12)$}
 
 - \textcolor{green}{Posterior $Beta(20, 12)$}
 
@@ -117,7 +134,7 @@ ggplot(d) +
 
 ## A quick look at the Beta distribution.
 
-- The Beta distribution is a family of continuous probability distributions defined on the [0, 1] interval parameterized by two positive "shape" parameters  $\alpha$ and $\beta$.
+- The Beta distribution is defined on the [0, 1] interval parameterized by two positive "shape" parameters  $\alpha$ and $\beta$.
 
 - Parameters of Beta distribution are commonly considered as "pseudo-counts" of successes ($\alpha$) and failures ($\beta$)
 
@@ -322,6 +339,24 @@ res
 ```
 
 Reminder:  we want psrf < 1.05 and SSeff > 1000
+
+## JAGS - Diagnostics
+
+ESS definition:
+
+$$ESS=\frac{n}{1+2\sum_{k=1}^{\infty }{\rho(k)}}$$
+
+where $n$ is the number of samples and $\rho(k)$ is the correlation at lag $k$.
+
+- If your samples are independent, your effective samples size equals the actual sample size. 
+
+- If the correlation at lag k decreases extremely slowly, so slowly that the sum in the denominator diverges, your effective sample size is zero.
+
+## JAGS - Diagnostics
+
+- If psrf (potential scale reduction factor) is close to 1, we can conclude that each of the m sets of n simulated observations is close to the target distribution
+
+- There is also a multivariate version mpsrf
 
 
 ## Priors: the *$Beta(\alpha, \beta)$* distribution

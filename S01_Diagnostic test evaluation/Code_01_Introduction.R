@@ -31,3 +31,4 @@ results <- run.jags(basicjags,
                     sample = 5000)
 print(results)
 plot(results)
+

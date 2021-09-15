@@ -1,11 +1,11 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.23 (TeX Live 2021/W32TeX) (preloaded format=pdflatex 2021.8.17)  9 SEP 2021 15:47
+This is pdfTeX, Version 3.141592653-2.6-1.40.23 (TeX Live 2021/W32TeX) (preloaded format=pdflatex 2021.9.10)  15 SEP 2021 23:13
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
 **Slides_01_Introduction.tex
 (./Slides_01_Introduction.tex
 LaTeX2e <2021-06-01> patch level 1
-L3 programming layer <2021-07-12>
+L3 programming layer <2021-08-27>
 (c:/Users/E619545/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/beamer/beamer.cl
 s
 Document Class: beamer 2021/05/26 v3.63 A class for typesetting presentations
@@ -1179,97 +1179,131 @@ Overfull \vbox (44.55624pt too high) detected at line 150
 {c:/Users/E619545/AppData/Roaming/TinyTeX/texmf-var/fonts/map/pdftex/updmap/pdf
 tex.map}]
 LaTeX Font Info:    Trying to load font information for OT1+lmss on input line 
-154.
+153.
 (c:/Users/E619545/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/lm/ot1lmss.fd
 File: ot1lmss.fd 2015/05/01 v1.6.1 Font defs for Latin Modern
 )
 LaTeX Font Info:    Trying to load font information for OML+lmm on input line 1
-54.
+53.
 (c:/Users/E619545/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/lm/omllmm.fd
 File: omllmm.fd 2015/05/01 v1.6.1 Font defs for Latin Modern
 )
 LaTeX Font Info:    Trying to load font information for OMS+lmsy on input line 
-154.
+153.
 (c:/Users/E619545/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/lm/omslmsy.fd
 File: omslmsy.fd 2015/05/01 v1.6.1 Font defs for Latin Modern
 )
 LaTeX Font Info:    Trying to load font information for OMX+lmex on input line 
-154.
+153.
 (c:/Users/E619545/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/lm/omxlmex.fd
 File: omxlmex.fd 2015/05/01 v1.6.1 Font defs for Latin Modern
 )
 LaTeX Font Info:    External font `lmex10' loaded for size
-(Font)              <10.95> on input line 154.
+(Font)              <10.95> on input line 153.
 LaTeX Font Info:    External font `lmex10' loaded for size
-(Font)              <8> on input line 154.
+(Font)              <8> on input line 153.
 LaTeX Font Info:    External font `lmex10' loaded for size
-(Font)              <6> on input line 154.
-LaTeX Font Info:    Trying to load font information for U+msa on input line 154
+(Font)              <6> on input line 153.
+LaTeX Font Info:    Trying to load font information for U+msa on input line 153
 .
 
 (c:/Users/E619545/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/amsfonts/umsa.fd
 File: umsa.fd 2013/01/14 v3.01 AMS symbols A
 )
-LaTeX Font Info:    Trying to load font information for U+msb on input line 154
+LaTeX Font Info:    Trying to load font information for U+msb on input line 153
 .
 
 (c:/Users/E619545/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/amsfonts/umsb.fd
 File: umsb.fd 2013/01/14 v3.01 AMS symbols B
 )
 LaTeX Font Info:    Font shape `T1/lmss/m/it' in size <10.95> not available
-(Font)              Font shape `T1/lmss/m/sl' tried instead on input line 154.
+(Font)              Font shape `T1/lmss/m/sl' tried instead on input line 153.
 LaTeX Font Info:    Font shape `T1/lmss/m/it' in size <8> not available
-(Font)              Font shape `T1/lmss/m/sl' tried instead on input line 154.
+(Font)              Font shape `T1/lmss/m/sl' tried instead on input line 153.
 LaTeX Font Info:    Font shape `T1/lmss/m/it' in size <6> not available
-(Font)              Font shape `T1/lmss/m/sl' tried instead on input line 154.
+(Font)              Font shape `T1/lmss/m/sl' tried instead on input line 153.
 [2
 
 ]
-LaTeX Font Info:    Trying to load font information for TS1+lmss on input line 
-183.
-(c:/Users/E619545/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/lm/ts1lmss.fd
-File: ts1lmss.fd 2015/05/01 v1.6.1 Font defs for Latin Modern
-) [3
+<img/harmony.png, id=41, 608.77437pt x 216.81pt>
+File: img/harmony.png Graphic file (type png)
+<use img/harmony.png>
+Package pdftex.def Info: img/harmony.png  used on input line 166.
+(pdftex.def)             Requested size: 276.56548pt x 98.49652pt.
+[3
 
-] [4
+ <./img/harmony.png>]
+<img/reproducibility.png, id=50, 423.08063pt x 391.96437pt>
+File: img/reproducibility.png Graphic file (type png)
+<use img/reproducibility.png>
+Package pdftex.def Info: img/reproducibility.png  used on input line 177.
+(pdftex.def)             Requested size: 215.09686pt x 199.27716pt.
 
-] [5
+Overfull \vbox (27.11568pt too high) detected at line 177
+ []
 
-] [6
+[4
+
+ <./img/reproducibility.png>]
+<img/githubrep.png, id=58, 928.97063pt x 491.33563pt>
+File: img/githubrep.png Graphic file (type png)
+<use img/githubrep.png>
+Package pdftex.def Info: img/githubrep.png  used on input line 188.
+(pdftex.def)             Requested size: 307.29836pt x 162.53111pt.
+
+Overfull \vbox (6.00955pt too high) detected at line 188
+ []
+
+[5
+
+ <./img/githubrep.png>] [6
 
 ]
-<Slides_01_Introduction_files/figure-beamer/unnamed-chunk-1-1.pdf, id=65, 289.0
-8pt x 144.54pt>
+LaTeX Font Info:    Trying to load font information for TS1+lmss on input line 
+221.
+(c:/Users/E619545/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/lm/ts1lmss.fd
+File: ts1lmss.fd 2015/05/01 v1.6.1 Font defs for Latin Modern
+) [7
+
+] [8
+
+] [9
+
+] [10
+
+]
+<Slides_01_Introduction_files/figure-beamer/unnamed-chunk-1-1.pdf, id=102, 289.
+08pt x 144.54pt>
 File: Slides_01_Introduction_files/figure-beamer/unnamed-chunk-1-1.pdf Graphic 
 file (type pdf)
 <use Slides_01_Introduction_files/figure-beamer/unnamed-chunk-1-1.pdf>
 Package pdftex.def Info: Slides_01_Introduction_files/figure-beamer/unnamed-chu
-nk-1-1.pdf  used on input line 262.
+nk-1-1.pdf  used on input line 300.
 (pdftex.def)             Requested size: 289.09251pt x 144.54623pt.
-[7
+[11
 
  <./Slides_01_Introduction_files/figure-beamer/unnamed-chunk-1-1.pdf>]
-<Slides_01_Introduction_files/figure-beamer/unnamed-chunk-2-1.pdf, id=78, 289.0
-8pt x 144.54pt>
+<Slides_01_Introduction_files/figure-beamer/unnamed-chunk-2-1.pdf, id=114, 289.
+08pt x 144.54pt>
 File: Slides_01_Introduction_files/figure-beamer/unnamed-chunk-2-1.pdf Graphic 
 file (type pdf)
 <use Slides_01_Introduction_files/figure-beamer/unnamed-chunk-2-1.pdf>
 Package pdftex.def Info: Slides_01_Introduction_files/figure-beamer/unnamed-chu
-nk-2-1.pdf  used on input line 279.
+nk-2-1.pdf  used on input line 317.
 (pdftex.def)             Requested size: 289.09251pt x 144.54623pt.
-[8
+[12
 
- <./Slides_01_Introduction_files/figure-beamer/unnamed-chunk-2-1.pdf>] [9
-
-] [10
-
-] [11
-
-] [12
-
-] [13
+ <./Slides_01_Introduction_files/figure-beamer/unnamed-chunk-2-1.pdf>] [13
 
 ] [14
+
+] [15
+
+] [16
+
+] [17
+
+] [18
 
 ]
 \openout4 = `Slides_01_Introduction.vrb'.
@@ -1280,10 +1314,10 @@ LaTeX Font Info:    Trying to load font information for T1+lmtt on input line 7
 (c:/Users/E619545/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/lm/t1lmtt.fd
 File: t1lmtt.fd 2015/05/01 v1.6.1 Font defs for Latin Modern
 ))
-Overfull \vbox (21.8173pt too high) detected at line 412
+Overfull \vbox (21.8173pt too high) detected at line 450
  []
 
-[15
+[19
 
 ]
 \openout4 = `Slides_01_Introduction.vrb'.
@@ -1291,25 +1325,25 @@ Overfull \vbox (21.8173pt too high) detected at line 412
 (./Slides_01_Introduction.vrb
 LaTeX Font Info:    Font shape `T1/lmtt/bx/n' in size <10.95> not available
 (Font)              Font shape `T1/lmtt/b/n' tried instead on input line 15.
-) [16
+) [20
 
 ]
 \openout4 = `Slides_01_Introduction.vrb'.
 
-(./Slides_01_Introduction.vrb) [17
+(./Slides_01_Introduction.vrb) [21
 
-] [18
+] [22
 
 ]
 \openout4 = `Slides_01_Introduction.vrb'.
 
-(./Slides_01_Introduction.vrb) [19
+(./Slides_01_Introduction.vrb) [23
 
 ]
 \openout4 = `Slides_01_Introduction.vrb'.
 
 (./Slides_01_Introduction.vrb
-<Slides_01_Introduction_files/figure-beamer/unnamed-chunk-11-1.pdf, id=168, 722
+<Slides_01_Introduction_files/figure-beamer/unnamed-chunk-11-1.pdf, id=204, 722
 .7pt x 361.35pt>
 File: Slides_01_Introduction_files/figure-beamer/unnamed-chunk-11-1.pdf Graphic
  file (type pdf)
@@ -1317,7 +1351,7 @@ File: Slides_01_Introduction_files/figure-beamer/unnamed-chunk-11-1.pdf Graphic
 Package pdftex.def Info: Slides_01_Introduction_files/figure-beamer/unnamed-chu
 nk-11-1.pdf  used on input line 8.
 (pdftex.def)             Requested size: 307.2923pt x 153.64615pt.
-<Slides_01_Introduction_files/figure-beamer/unnamed-chunk-12-1.pdf, id=169, 722
+<Slides_01_Introduction_files/figure-beamer/unnamed-chunk-12-1.pdf, id=205, 722
 .7pt x 505.89pt>
 File: Slides_01_Introduction_files/figure-beamer/unnamed-chunk-12-1.pdf Graphic
  file (type pdf)
@@ -1326,102 +1360,106 @@ Package pdftex.def Info: Slides_01_Introduction_files/figure-beamer/unnamed-chu
 nk-12-1.pdf  used on input line 14.
 (pdftex.def)             Requested size: 307.2923pt x 215.1046pt.
 )
-Overfull \vbox (225.15146pt too high) detected at line 552
+Overfull \vbox (225.15146pt too high) detected at line 590
  []
 
-[20
+[24
 
  <./Slides_01_Introduction_files/figure-beamer/unnamed-chunk-11-1.pdf> <./Slide
 s_01_Introduction_files/figure-beamer/unnamed-chunk-12-1.pdf>]
-<Slides_01_Introduction_files/figure-beamer/unnamed-chunk-13-1.pdf, id=186, 722
+<Slides_01_Introduction_files/figure-beamer/unnamed-chunk-13-1.pdf, id=222, 722
 .7pt x 505.89pt>
 File: Slides_01_Introduction_files/figure-beamer/unnamed-chunk-13-1.pdf Graphic
  file (type pdf)
 <use Slides_01_Introduction_files/figure-beamer/unnamed-chunk-13-1.pdf>
 Package pdftex.def Info: Slides_01_Introduction_files/figure-beamer/unnamed-chu
-nk-13-1.pdf  used on input line 561.
+nk-13-1.pdf  used on input line 599.
 (pdftex.def)             Requested size: 307.2923pt x 215.1046pt.
 
-Overfull \vbox (26.12782pt too high) detected at line 561
+Overfull \vbox (26.12782pt too high) detected at line 599
  []
 
-[21
+[25
 
  <./Slides_01_Introduction_files/figure-beamer/unnamed-chunk-13-1.pdf>]
-<Slides_01_Introduction_files/figure-beamer/unnamed-chunk-14-1.pdf, id=198, 722
+<Slides_01_Introduction_files/figure-beamer/unnamed-chunk-14-1.pdf, id=235, 722
 .7pt x 505.89pt>
 File: Slides_01_Introduction_files/figure-beamer/unnamed-chunk-14-1.pdf Graphic
  file (type pdf)
 <use Slides_01_Introduction_files/figure-beamer/unnamed-chunk-14-1.pdf>
 Package pdftex.def Info: Slides_01_Introduction_files/figure-beamer/unnamed-chu
-nk-14-1.pdf  used on input line 571.
+nk-14-1.pdf  used on input line 609.
 (pdftex.def)             Requested size: 307.2923pt x 215.1046pt.
 
-Overfull \vbox (42.22774pt too high) detected at line 571
+Overfull \vbox (42.22774pt too high) detected at line 609
  []
 
-[22
+[26
 
  <./Slides_01_Introduction_files/figure-beamer/unnamed-chunk-14-1.pdf>]
-<Slides_01_Introduction_files/figure-beamer/unnamed-chunk-15-1.pdf, id=210, 722
+<Slides_01_Introduction_files/figure-beamer/unnamed-chunk-15-1.pdf, id=247, 722
 .7pt x 505.89pt>
 File: Slides_01_Introduction_files/figure-beamer/unnamed-chunk-15-1.pdf Graphic
  file (type pdf)
 <use Slides_01_Introduction_files/figure-beamer/unnamed-chunk-15-1.pdf>
 Package pdftex.def Info: Slides_01_Introduction_files/figure-beamer/unnamed-chu
-nk-15-1.pdf  used on input line 579.
+nk-15-1.pdf  used on input line 617.
 (pdftex.def)             Requested size: 307.2923pt x 215.1046pt.
 
-Overfull \vbox (21.12782pt too high) detected at line 579
+Overfull \vbox (21.12782pt too high) detected at line 617
  []
 
-[23
+[27
 
  <./Slides_01_Introduction_files/figure-beamer/unnamed-chunk-15-1.pdf>]
-<Slides_01_Introduction_files/figure-beamer/unnamed-chunk-16-1.pdf, id=222, 722
+<Slides_01_Introduction_files/figure-beamer/unnamed-chunk-16-1.pdf, id=259, 722
 .7pt x 505.89pt>
 File: Slides_01_Introduction_files/figure-beamer/unnamed-chunk-16-1.pdf Graphic
  file (type pdf)
 <use Slides_01_Introduction_files/figure-beamer/unnamed-chunk-16-1.pdf>
 Package pdftex.def Info: Slides_01_Introduction_files/figure-beamer/unnamed-chu
-nk-16-1.pdf  used on input line 588.
+nk-16-1.pdf  used on input line 626.
 (pdftex.def)             Requested size: 307.2923pt x 215.1046pt.
 
-Overfull \vbox (26.12782pt too high) detected at line 588
+Overfull \vbox (26.12782pt too high) detected at line 626
  []
 
-[24
+[28
 
  <./Slides_01_Introduction_files/figure-beamer/unnamed-chunk-16-1.pdf>]
 \openout4 = `Slides_01_Introduction.vrb'.
 
-(./Slides_01_Introduction.vrb) [25
+(./Slides_01_Introduction.vrb) [29
+
+] [30
+
+] [31
 
 ]
-<Slides_01_Introduction_files/figure-beamer/unnamed-chunk-18-1.pdf, id=241, 289
+<Slides_01_Introduction_files/figure-beamer/unnamed-chunk-18-1.pdf, id=291, 289
 .08pt x 216.81pt>
 File: Slides_01_Introduction_files/figure-beamer/unnamed-chunk-18-1.pdf Graphic
  file (type pdf)
 <use Slides_01_Introduction_files/figure-beamer/unnamed-chunk-18-1.pdf>
 Package pdftex.def Info: Slides_01_Introduction_files/figure-beamer/unnamed-chu
-nk-18-1.pdf  used on input line 613.
+nk-18-1.pdf  used on input line 687.
 (pdftex.def)             Requested size: 289.09251pt x 216.81938pt.
 LaTeX Font Info:    Font shape `T1/lmss/bx/it' in size <12> not available
-(Font)              Font shape `T1/lmss/bx/sl' tried instead on input line 613.
+(Font)              Font shape `T1/lmss/bx/sl' tried instead on input line 687.
 
 LaTeX Font Info:    External font `lmex10' loaded for size
-(Font)              <12> on input line 613.
+(Font)              <12> on input line 687.
 LaTeX Font Info:    Font shape `T1/lmss/m/it' in size <12> not available
-(Font)              Font shape `T1/lmss/m/sl' tried instead on input line 613.
+(Font)              Font shape `T1/lmss/m/sl' tried instead on input line 687.
 
-Overfull \vbox (28.45096pt too high) detected at line 613
+Overfull \vbox (28.45096pt too high) detected at line 687
  []
 
-[26
+[32
 
- <./Slides_01_Introduction_files/figure-beamer/unnamed-chunk-18-1.pdf>] [27
+ <./Slides_01_Introduction_files/figure-beamer/unnamed-chunk-18-1.pdf>] [33
 
-] [28
+] [34
 
 ]
 \tf@nav=\write7
@@ -1436,44 +1474,47 @@ Overfull \vbox (28.45096pt too high) detected at line 613
 (./Slides_01_Introduction.aux)
 Package rerunfilecheck Info: File `Slides_01_Introduction.out' has not changed.
 
-(rerunfilecheck)             Checksum: F9A5D2D213A4FE760F3E28466588F809;432.
+(rerunfilecheck)             Checksum: F480F04E72E89DF9E9E1E14B91DEAFE6;535.
  ) 
 Here is how much of TeX's memory you used:
- 24984 strings out of 480502
- 496350 string characters out of 5897829
- 756774 words of memory out of 5000000
- 41997 multiletter control sequences out of 15000+600000
- 459744 words of font info for 68 fonts, out of 8000000 for 9000
+ 25061 strings out of 480559
+ 497494 string characters out of 5901612
+ 755701 words of memory out of 5000000
+ 41996 multiletter control sequences out of 15000+600000
+ 462512 words of font info for 69 fonts, out of 8000000 for 9000
  14 hyphenation exceptions out of 8191
  101i,13n,113p,1823b,751s stack positions out of 5000i,500n,10000p,200000b,80000s
 {c:/Users/E619545/AppData/Roaming/TinyTeX/texmf-dist/fonts/enc/dvips/lm/lm-ma
 thit.enc}{c:/Users/E619545/AppData/Roaming/TinyTeX/texmf-dist/fonts/enc/dvips/l
 m/lm-rm.enc}{c:/Users/E619545/AppData/Roaming/TinyTeX/texmf-dist/fonts/enc/dvip
 s/lm/lm-ec.enc}{c:/Users/E619545/AppData/Roaming/TinyTeX/texmf-dist/fonts/enc/d
-vips/lm/lm-mathsy.enc}{c:/Users/E619545/AppData/Roaming/TinyTeX/texmf-dist/font
-s/enc/dvips/lm/lm-ts1.enc}<c:/Users/E619545/AppData/Roaming/TinyTeX/texmf-dist/
-fonts/type1/public/lm/lmmi10.pfb><c:/Users/E619545/AppData/Roaming/TinyTeX/texm
-f-dist/fonts/type1/public/lm/lmmi12.pfb><c:/Users/E619545/AppData/Roaming/TinyT
-eX/texmf-dist/fonts/type1/public/lm/lmmi6.pfb><c:/Users/E619545/AppData/Roaming
-/TinyTeX/texmf-dist/fonts/type1/public/lm/lmmi8.pfb><c:/Users/E619545/AppData/R
-oaming/TinyTeX/texmf-dist/fonts/type1/public/lm/lmss10.pfb><c:/Users/E619545/Ap
-pData/Roaming/TinyTeX/texmf-dist/fonts/type1/public/lm/lmss12.pfb><c:/Users/E61
-9545/AppData/Roaming/TinyTeX/texmf-dist/fonts/type1/public/lm/lmss8.pfb><c:/Use
-rs/E619545/AppData/Roaming/TinyTeX/texmf-dist/fonts/type1/public/lm/lmssbx10.pf
-b><c:/Users/E619545/AppData/Roaming/TinyTeX/texmf-dist/fonts/type1/public/lm/lm
-sso10.pfb><c:/Users/E619545/AppData/Roaming/TinyTeX/texmf-dist/fonts/type1/publ
-ic/lm/lmsso12.pfb><c:/Users/E619545/AppData/Roaming/TinyTeX/texmf-dist/fonts/ty
-pe1/public/lm/lmsso8.pfb><c:/Users/E619545/AppData/Roaming/TinyTeX/texmf-dist/f
-onts/type1/public/lm/lmsy10.pfb><c:/Users/E619545/AppData/Roaming/TinyTeX/texmf
--dist/fonts/type1/public/lm/lmsy6.pfb><c:/Users/E619545/AppData/Roaming/TinyTeX
-/texmf-dist/fonts/type1/public/lm/lmsy8.pfb><c:/Users/E619545/AppData/Roaming/T
-inyTeX/texmf-dist/fonts/type1/public/lm/lmtk10.pfb><c:/Users/E619545/AppData/Ro
-aming/TinyTeX/texmf-dist/fonts/type1/public/lm/lmtt10.pfb><c:/Users/E619545/App
-Data/Roaming/TinyTeX/texmf-dist/fonts/type1/public/lm/lmtti10.pfb>
-Output written on Slides_01_Introduction.pdf (28 pages, 369542 bytes).
+vips/lm/lm-mathex.enc}{c:/Users/E619545/AppData/Roaming/TinyTeX/texmf-dist/font
+s/enc/dvips/lm/lm-mathsy.enc}{c:/Users/E619545/AppData/Roaming/TinyTeX/texmf-di
+st/fonts/enc/dvips/lm/lm-ts1.enc}<c:/Users/E619545/AppData/Roaming/TinyTeX/texm
+f-dist/fonts/type1/public/lm/lmex10.pfb><c:/Users/E619545/AppData/Roaming/TinyT
+eX/texmf-dist/fonts/type1/public/lm/lmmi10.pfb><c:/Users/E619545/AppData/Roamin
+g/TinyTeX/texmf-dist/fonts/type1/public/lm/lmmi12.pfb><c:/Users/E619545/AppData
+/Roaming/TinyTeX/texmf-dist/fonts/type1/public/lm/lmmi6.pfb><c:/Users/E619545/A
+ppData/Roaming/TinyTeX/texmf-dist/fonts/type1/public/lm/lmmi8.pfb><c:/Users/E61
+9545/AppData/Roaming/TinyTeX/texmf-dist/fonts/type1/public/lm/lmss10.pfb><c:/Us
+ers/E619545/AppData/Roaming/TinyTeX/texmf-dist/fonts/type1/public/lm/lmss12.pfb
+><c:/Users/E619545/AppData/Roaming/TinyTeX/texmf-dist/fonts/type1/public/lm/lms
+s8.pfb><c:/Users/E619545/AppData/Roaming/TinyTeX/texmf-dist/fonts/type1/public/
+lm/lmssbx10.pfb><c:/Users/E619545/AppData/Roaming/TinyTeX/texmf-dist/fonts/type
+1/public/lm/lmsso10.pfb><c:/Users/E619545/AppData/Roaming/TinyTeX/texmf-dist/fo
+nts/type1/public/lm/lmsso12.pfb><c:/Users/E619545/AppData/Roaming/TinyTeX/texmf
+-dist/fonts/type1/public/lm/lmsso8.pfb><c:/Users/E619545/AppData/Roaming/TinyTe
+X/texmf-dist/fonts/type1/public/lm/lmsy10.pfb><c:/Users/E619545/AppData/Roaming
+/TinyTeX/texmf-dist/fonts/type1/public/lm/lmsy6.pfb><c:/Users/E619545/AppData/R
+oaming/TinyTeX/texmf-dist/fonts/type1/public/lm/lmsy8.pfb><c:/Users/E619545/App
+Data/Roaming/TinyTeX/texmf-dist/fonts/type1/public/lm/lmtk10.pfb><c:/Users/E619
+545/AppData/Roaming/TinyTeX/texmf-dist/fonts/type1/public/lm/lmtt10.pfb><c:/Use
+rs/E619545/AppData/Roaming/TinyTeX/texmf-dist/fonts/type1/public/lm/lmtti10.pfb
+>
+Output written on Slides_01_Introduction.pdf (34 pages, 971602 bytes).
 PDF statistics:
- 371 PDF objects out of 1000 (max. 8388607)
- 277 compressed objects within 3 object streams
- 84 named destinations out of 1000 (max. 500000)
- 104 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 430 PDF objects out of 1000 (max. 8388607)
+ 321 compressed objects within 4 object streams
+ 102 named destinations out of 1000 (max. 500000)
+ 127 words of extra memory for PDF output out of 10000 (max. 10000000)
 

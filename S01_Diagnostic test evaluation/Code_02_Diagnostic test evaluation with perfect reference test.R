@@ -39,7 +39,7 @@ NPV
 # Likelihood ratios
 PLR <- Se/(1-Sp)
 PLR
-NLR <- (1-Sp)/Se
+NLR <- (1-Se)/Sp
 NLR
 
 # Diagnostic odds ratio
