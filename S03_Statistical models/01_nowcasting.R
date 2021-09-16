@@ -30,12 +30,14 @@ ggplot(dati, aes(x = date, y = y)) +
   theme_minimal()
 
 # fit model
+set.seed(1)
 mod = growthGLM(di = dati$y,                  # response variable
                 ti = dati$t,                  # time variable
                 X = cbind(1, dati$WeekEnd),   # design matrix
                 family = "Negative Binomial", # distribution
                 tPred = max(dati$t)+14,       # prediction time horizon
                 alpha = 0.05)                 # confidence level for predictions
+# please be patient...
 str(mod)
 
 mod$pars    # MLEs
@@ -115,6 +117,8 @@ ggplot(dati, aes(x = date, y = y)) +
   labs(x = NULL, y = "New deceased") +
   theme_minimal()
 
+# fit model
+set.seed(2)
 mod = growthGLM(di = dati$y,  # response variable
                 ti = dati$t,  # time 
                 X  = cbind(rep(1,length(dati$y))),  # design matrix

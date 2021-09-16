@@ -16,13 +16,12 @@ dati = dati[date <= end,]
 # create variables for COVINDEX analysis
 dati[, TPR := positives/swabs]
 # time variable
-dati[, t := as.numeric(date - as.Date("2020-01-01"))]
-# dati[, t := as.numeric(date - as.Date(start))+1]
+dati[, t := 1:nrow(dati)]
 # dummy variable for days after sundays and holidays 
-dati[, WeekEnd := (weekdays(date) %in% c("Sunday", "Monday") | 
+dati[, weekend := (weekdays(date) %in% c("Sunday", "Monday") | 
                    date %in% (Italian_holidays+1))]
 
-# View(dati[, c("date", "t", "positives", "swabs", "TPR", "WeekEnd")])
+# View(dati[, c("date", "t", "positives", "swabs", "TPR", "weekend")])
 
 ggplot(dati, aes(x = date, y = TPR, size = swabs)) +
   geom_point(alpha = 0.5) +
@@ -45,13 +44,13 @@ ggplot(dati, aes(x = date, y = TPR, size = swabs)) +
 mod = covindex_gam_betareg(
   y = dati$TPR, 
   t = dati$t, 
-  x = data.frame(WeekEnd = dati$WeekEnd),
+  x = data.frame(weekend = dati$weekend),
   wts = dati$swabs/mean(dati$swabs, na.rm=TRUE))
 summary(mod)
 
 # plot smoothing parameter selection
-dt = data.table(k = mod$k, AIC = mod$AIC)
-ggplot(dt, aes(x = k, y = AIC)) +
+DT = data.table(k = mod$k, AIC = mod$AIC)
+ggplot(DT, aes(x = k, y = AIC)) +
   geom_point() +
   geom_line() +
   geom_vline(xintercept = mod$k_opt, lty = 2) +
@@ -65,17 +64,16 @@ pacf(residuals(mod, type = "deviance"), lag.max = 21, ylim = c(-0.5, 0.5))
 pred = simpred_covindex_gam_betareg(
   mod,
   newdata = data.frame(t = dati$t, 
-                       WeekEnd = FALSE) )
+                       weekend = FALSE) )
 
-df = dati[, c("date", "TPR")]
-CI_y = cbind(df, 
+CI_y = cbind(dati[, c("date", "TPR")], 
              list2DF(pred[c("mu", 
-                            "lower_confint", "upper_confint", 
+                            "lower_credint", "upper_credint", 
                             "lower_predint", "upper_predint")]))
 
 ggplot(CI_y, aes(x = date, y = mu)) +
   # model fit
-  geom_ribbon(aes(ymin = lower_confint, ymax = upper_confint),
+  geom_ribbon(aes(ymin = lower_credint, ymax = upper_credint),
               alpha = 1, fill = "grey50") +
   geom_ribbon(aes(ymin = lower_predint, ymax = upper_predint),
               alpha = 0.5, fill = "grey50") +
@@ -97,17 +95,17 @@ ggplot(CI_y, aes(x = date, y = mu)) +
 
 # COVINDEX
 covindex_sim = apply(pred$mu_sim, 2, covindex)
-confint = apply(covindex_sim, 1, quantile, 
+credint = apply(covindex_sim, 1, quantile, 
                 prob = c(0.025, 0.975), na.rm = TRUE)
-CI_covindex = cbind(df, 
+CI_covindex = cbind(dati[, c("date", "TPR")], 
                     covindex = covindex(pred$mu),
-                    lower_confint = confint[1,], 
-                    upper_confint = confint[2,])
+                    lower_credint = credint[1,], 
+                    upper_credint = credint[2,])
 
 ggplot(CI_covindex, aes(x = date, y = covindex)) +
   geom_hline(yintercept = 1, lty = 2) +
   # model fit
-  geom_ribbon(aes(ymin = lower_confint, ymax = upper_confint),
+  geom_ribbon(aes(ymin = lower_credint, ymax = upper_credint),
               alpha = 1, fill = "grey") +
   geom_line(col = "dodgerblue2", lwd = 1) +
   #
