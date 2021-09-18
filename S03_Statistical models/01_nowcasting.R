@@ -17,12 +17,13 @@ dati = dati[date <= end,]
 # response variable
 dati[, y := nuovi_positivi]
 # time variable
-dati[, t := as.numeric(date - as.Date(start))+1]
+# dati[, t := as.numeric(date - as.Date(start))+1]
+dati[, t := 1:nrow(dati)]
 # dummy variable for days after sundays and holidays
-dati[, WeekEnd := (weekdays(date) %in% "Monday" | 
+dati[, weekend := (weekdays(date) %in% "Monday" |
                    date %in% (Italian_holidays+1))]
 
-# View(dati[, c("date", "t", "y", "WeekEnd")])
+# View(dati[, c("date", "t", "y", "weekend")])
 
 ggplot(dati, aes(x = date, y = y)) +
   geom_point(size = 1) +
@@ -33,7 +34,7 @@ ggplot(dati, aes(x = date, y = y)) +
 set.seed(1)
 mod = growthGLM(di = dati$y,                  # response variable
                 ti = dati$t,                  # time variable
-                X = cbind(1, dati$WeekEnd),   # design matrix
+                X = cbind(1, dati$weekend),   # design matrix
                 family = "Negative Binomial", # distribution
                 tPred = max(dati$t)+14,       # prediction time horizon
                 alpha = 0.05)                 # confidence level for predictions
@@ -47,7 +48,7 @@ mod$R2cum   # pseudo-Rsquared for cumulative counts
 
 # table of parameters
 tab = data.frame("Parameters" = mod$pars, "SE" = mod$se)
-rownames(tab) = c("log(h)", "p", "s", "log(a)", "WeekEnd", "log(r)", "log(v)")
+rownames(tab) = c("log(h)", "p", "s", "log(a)", "weekend", "log(r)", "log(v)")
 tab
 
 # table of parameters (1-alpha)100% confidence intervals
@@ -59,7 +60,7 @@ tab2 = data.frame("Parameters" = tab$Parameters,
                   check.names = FALSE)
 # transform parameters to natural scale
 tab2[c(1,4,6,7),] = exp(tab2[c(1,4,6,7),])
-rownames(tab2) = c("h", "p", "s", "a", "WeekEnd", "r", "v")
+rownames(tab2) = c("h", "p", "s", "a", "weekend", "r", "v")
 tab2
 
 peak <- floor(mod$pars[2] + log10(mod$pars[3])/exp(mod$pars[1]))
@@ -68,7 +69,7 @@ dati$date[peak]
 
 
 dt = data.table(date = c(dati$date, max(dati$date)+1:14),
-                y = c(dati$y, rep(NA, 14)), 
+                y = c(dati$y, rep(NA, 14)),
                 Y = c(cumsum(dati$y), rep(NA,14)),
                 yfit = mod$linPredDiff,
                 ylow = mod$lowdiff,
@@ -80,8 +81,8 @@ dt = data.table(date = c(dati$date, max(dati$date)+1:14),
 ggplot(dt, aes(x = date, y = y)) +
   geom_point(size = 1) +
   geom_line(aes(y = yfit), col = "firebrick") +
-  geom_ribbon(aes(ymin = ylow, ymax = yup), 
-              fill = "firebrick", alpha = 0.3) +  
+  geom_ribbon(aes(ymin = ylow, ymax = yup),
+              fill = "firebrick", alpha = 0.3) +
   geom_vline(xintercept = dati$date[peak], lty = 2) +
   labs(x = NULL, y = "New positives") +
   theme_minimal()
@@ -89,8 +90,8 @@ ggplot(dt, aes(x = date, y = y)) +
 ggplot(dt, aes(x = date, y = Y)) +
   geom_point(size = 1) +
   geom_line(aes(y = Yfit), col = "firebrick") +
-  geom_ribbon(aes(ymin = Ylow, ymax = Yup), 
-              fill = "firebrick", alpha = 0.3) +  
+  geom_ribbon(aes(ymin = Ylow, ymax = Yup),
+              fill = "firebrick", alpha = 0.3) +
   labs(x = NULL, y = "Cum Positives") +
   theme_minimal()
 
@@ -120,7 +121,7 @@ ggplot(dati, aes(x = date, y = y)) +
 # fit model
 set.seed(2)
 mod = growthGLM(di = dati$y,  # response variable
-                ti = dati$t,  # time 
+                ti = dati$t,  # time
                 X  = cbind(rep(1,length(dati$y))),  # design matrix
                 family = "Negative Binomial",       # distribution
                 tPred = max(dati$t)+14,  # prediction time horizon
@@ -155,7 +156,7 @@ peak
 dati$date[peak]
 
 dt = data.table(date = c(dati$date, max(dati$date)+1:14),
-                y = c(dati$y, rep(NA, 14)), 
+                y = c(dati$y, rep(NA, 14)),
                 Y = c(cumsum(dati$y), rep(NA,14)),
                 yfit = mod$linPredDiff,
                 ylow = mod$lowdiff,
